@@ -1,0 +1,36 @@
+{
+  "name": "product-detail-carousel",
+  "version": "1.0.0",
+  "description": "Product Detail Carousel of the unfair.com",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "nodemon server/index.js",
+    "client-dev": "webpack --config webpack.dev.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Unfair-dot-com/product-detail-carousel.git"
+  },
+  "author": "E.K.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Unfair-dot-com/product-detail-carousel/issues"
+  },
+  "homepage": "https://github.com/Unfair-dot-com/product-detail-carousel#readme",
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "nodemon": "^2.0.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}
