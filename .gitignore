@@ -1,0 +1,11 @@
+# Ignore node_modules directory
+node_modules
+
+# Ignore bundle JS files inside the public directory
+public/*.js
+
+# Ignore secret api keys inside the server/config/api_keys.js
+server/config/api_keys.js
+
+# Ignore the package-lock.json file
+package-lock.json
