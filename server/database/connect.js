@@ -1,7 +1,7 @@
 const Client = require('mongodb').MongoClient;
 const config = require('../config/db');
 
-const db = (url, dbName) => new Promise((resolve, reject) => {
+const dbConnection = (url, dbName) => new Promise((resolve, reject) => {
   const connection = new Client(url, { useUnifiedTopology: true });
   connection.connect((error, client) => {
     if (error) {
@@ -12,4 +12,4 @@ const db = (url, dbName) => new Promise((resolve, reject) => {
   });
 });
 
-module.exports = db(config.url, config.name);
+module.exports = dbConnection(config.url, config.name);

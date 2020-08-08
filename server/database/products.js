@@ -1,4 +1,4 @@
-const db = require('./connect');
+const db = require('./wrapper');
 
 const formatProduct = (document) => ({
   _id: Number.parseInt(document._id, 10) || undefined,
@@ -18,33 +18,6 @@ const formatProducts = (documents) => {
   return documents.map(formatProduct);
 };
 
-const Promisify = (func) => new Promise((resolve, reject) => {
-  func((error, success) => {
-    if (error) {
-      reject(error);
-      return;
-    }
-    resolve(success);
-  });
-});
-
-const products = () => Promisify((callback) => {
-  db.then((pdc) => {
-    pdc.collection('products', callback);
-  });
-});
-
-const insert = (documents) => Promisify((callback) => {
-  products().then((dataset) => {
-    dataset.insertMany(formatProducts(documents), callback);
-  });
-});
-
-const find = (query = {}) => Promisify((callback) => {
-  products().then((dataset) => {
-    dataset.find(query, { limit: 10 }).toArray(callback);
-  });
-});
-
-module.exports.insert = insert;
-module.exports.find = find;
+module.exports.insert = (documents) => db.insert('products', formatProducts(documents));
+module.exports.find = (query = {}) => db.find('products', query);
+module.exports.drop = () => db.drop('products');
