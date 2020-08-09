@@ -4,9 +4,9 @@
   "description": "Product Detail Carousel of the unfair.com",
   "main": "server/index.js",
   "scripts": {
-    "test": "nodemon server/index.js",
-    "db-init": "node server/database/init.js",
-    "client-dev": "webpack --config webpack.dev.config.js"
+    "server-dev": "nodemon server/index.js",
+    "client-dev": "webpack --config webpack.dev.config.js",
+    "db-init": "node server/database/init.js"
   },
   "repository": {
     "type": "git",
