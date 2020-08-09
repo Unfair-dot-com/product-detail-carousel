@@ -11,8 +11,8 @@ const Promisify = (func) => new Promise((resolve, reject) => {
 });
 
 const collection = (name) => Promisify((callback) => {
-  connection.then((db) => {
-    db.collection(name, callback);
+  connection.then((connect) => {
+    connect.database.collection(name, callback);
   });
 });
 
@@ -37,3 +37,4 @@ const drop = (name) => Promisify((callback) => {
 module.exports.insert = insert;
 module.exports.find = find;
 module.exports.drop = drop;
+module.exports.connection = connection;

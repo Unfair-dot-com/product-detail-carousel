@@ -6,7 +6,7 @@ const formatProduct = (document) => ({
   decription: String(document.description) || '',
   image_url: String(document.image_url) || '',
   brand: String(document.brand) || '',
-  price: Number.parseFloat(document.price) || 0.0,
+  price: String(document.price) || '$0.00',
   review_score: Number.parseFloat(document.review_score) || 5.00,
   review_count: Number.parseInt(document.review_count, 10) || 0,
 });
@@ -21,3 +21,4 @@ const formatProducts = (documents) => {
 module.exports.insert = (documents) => db.insert('products', formatProducts(documents));
 module.exports.find = (query = {}) => db.find('products', query);
 module.exports.drop = () => db.drop('products');
+module.exports.connection = db.connection;
