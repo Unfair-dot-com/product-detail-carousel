@@ -5,6 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "test": "nodemon server/index.js",
+    "db-init": "node server/database/init.js",
     "client-dev": "webpack --config webpack.dev.config.js"
   },
   "repository": {
@@ -32,5 +33,9 @@
     "react-dom": "^16.13.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "faker": "^4.1.0",
+    "mongodb": "^3.6.0"
   }
 }
