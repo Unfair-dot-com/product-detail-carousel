@@ -8,7 +8,8 @@ const dbConnection = (url, dbName) => new Promise((resolve, reject) => {
       reject(error);
       return;
     }
-    resolve(client.db(dbName));
+    const database = client.db(dbName);
+    resolve({ client, database });
   });
 });
 
