@@ -77,7 +77,10 @@ const removeMulti = (removePaths) => {
       Objects: removePaths.map((removePath) => ({ Key: removePath })),
     },
   };
-  return removeRemoteFiles(params);
+  if (params.Delete.Objects.length > 0) {
+    return removeRemoteFiles(params);
+  }
+  return [];
 };
 
 const uploadFiles = (localDirPath, remoteDirPath) => listLocalDir(localDirPath)
@@ -85,7 +88,9 @@ const uploadFiles = (localDirPath, remoteDirPath) => listLocalDir(localDirPath)
     const pathPairs = [];
     localFileNames.forEach((localFileName, index) => {
       const localFilePath = path.join(localDirPath, localFileName);
-      const remoteFileName = (index + 1).toString();
+      const sufixIndex = localFileName.lastIndexOf('.');
+      const sufix = localFileName.slice(sufixIndex);
+      const remoteFileName = `image_${(index).toString()}${sufix}`;
       const remoteFilePath = `${remoteDirPath}/${remoteFileName}`;
       pathPairs.push([localFilePath, remoteFilePath]);
     });
@@ -97,3 +102,4 @@ const removeFiles = (remoteDirPath) => listRemoteDir(remoteDirPath)
 
 module.exports.uploadFiles = uploadFiles;
 module.exports.removeFiles = removeFiles;
+module.exports.listRemoteDir = listRemoteDir;
