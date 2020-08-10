@@ -1,5 +1,6 @@
-# Ignore node_modules directory
+# Ignore directories
 node_modules
+images
 
 # Ignore bundle JS files inside the public directory
 public/*.js
