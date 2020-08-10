@@ -1,5 +1,6 @@
 const fs = require('fs');
 const aws = require('aws-sdk');
+const path = require('path');
 const config = require('../config/filestore');
 const credentials = require('../config/api_keys');
 
@@ -17,6 +18,10 @@ const Promisify = (func) => new Promise((resolve, reject) => {
   });
 });
 
+const listLocalDir = (dirPath) => Promisify((callback) => {
+  fs.readdir(dirPath, callback);
+});
+
 const readLocalFile = (filePath) => Promisify((callback) => {
   fs.readFile(filePath, callback);
 });
@@ -25,25 +30,38 @@ const writeRemoteFile = (params) => Promisify((callback) => {
   s3.putObject(params, callback);
 });
 
+const removeRemoteFiles = (params) => Promisify((callback) => {
+  s3.deleteObjects(params, callback);
+});
+
+const listRemoteFiles = (params) => Promisify((callback) => {
+  s3.listObjectsV2(params, callback);
+});
+
+const listRemoteDir = (dirPath, limit = 1000) => {
+  const params = {
+    Bucket: config.bucket,
+    Prefix: dirPath,
+    MaxKeys: limit,
+  };
+  return listRemoteFiles(params).then((data) => {
+    const files = data.Contents;
+    return files.map((file) => file.Key);
+  });
+};
+
 const upload = (readPath, writePath) => readLocalFile(readPath)
   .then((file) => {
     const params = {
       Bucket: config.bucket,
       Key: writePath,
       Body: file,
+      ContentType: 'image/jpeg', // This value should not be static
     };
     return writeRemoteFile(params);
   });
 
 const uploadMulti = (pathPairs) => {
-  if (!Array.isArray(pathPairs)) {
-    throw new Error('pathPairs should be an array.');
-  }
-  pathPairs.forEach((pathPair) => {
-    if (!Array.isArray(pathPair) || pathPair.length !== 2) {
-      throw new Error('pathPairs items should be arrays of length 2.');
-    }
-  });
   const uploads = [];
   pathPairs.forEach((pathPair) => {
     uploads.push(upload(...pathPair));
@@ -51,5 +69,31 @@ const uploadMulti = (pathPairs) => {
   return Promise.all(uploads);
 };
 
-module.exports.upload = upload;
-module.exports.uploadMulti = uploadMulti;
+const removeMulti = (removePaths) => {
+  const params = {
+    Bucket: config.bucket,
+    Delete: {
+      Quiet: false,
+      Objects: removePaths.map((removePath) => ({ Key: removePath })),
+    },
+  };
+  return removeRemoteFiles(params);
+};
+
+const uploadFiles = (localDirPath, remoteDirPath) => listLocalDir(localDirPath)
+  .then((localFileNames) => {
+    const pathPairs = [];
+    localFileNames.forEach((localFileName, index) => {
+      const localFilePath = path.join(localDirPath, localFileName);
+      const remoteFileName = (index + 1).toString();
+      const remoteFilePath = `${remoteDirPath}/${remoteFileName}`;
+      pathPairs.push([localFilePath, remoteFilePath]);
+    });
+    return uploadMulti(pathPairs);
+  });
+
+const removeFiles = (remoteDirPath) => listRemoteDir(remoteDirPath)
+  .then((removePaths) => removeMulti(removePaths));
+
+module.exports.uploadFiles = uploadFiles;
+module.exports.removeFiles = removeFiles;
