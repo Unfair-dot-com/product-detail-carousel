@@ -31,7 +31,11 @@ const writeRemoteFile = (params) => Promisify((callback) => {
 });
 
 const removeRemoteFiles = (params) => Promisify((callback) => {
-  s3.deleteObjects(params, callback);
+  if (params.Delete.Objects.length > 0) {
+    s3.deleteObjects(params, callback);
+  } else {
+    callback(null, []);
+  }
 });
 
 const listRemoteFiles = (params) => Promisify((callback) => {
@@ -85,7 +89,9 @@ const uploadFiles = (localDirPath, remoteDirPath) => listLocalDir(localDirPath)
     const pathPairs = [];
     localFileNames.forEach((localFileName, index) => {
       const localFilePath = path.join(localDirPath, localFileName);
-      const remoteFileName = (index + 1).toString();
+      const sufixIndex = localFileName.lastIndexOf('.');
+      const sufix = localFileName.slice(sufixIndex);
+      const remoteFileName = `image_${(index).toString()}${sufix}`;
       const remoteFilePath = `${remoteDirPath}/${remoteFileName}`;
       pathPairs.push([localFilePath, remoteFilePath]);
     });
@@ -97,3 +103,4 @@ const removeFiles = (remoteDirPath) => listRemoteDir(remoteDirPath)
 
 module.exports.uploadFiles = uploadFiles;
 module.exports.removeFiles = removeFiles;
+module.exports.listRemoteDir = listRemoteDir;
