@@ -31,11 +31,7 @@ const writeRemoteFile = (params) => Promisify((callback) => {
 });
 
 const removeRemoteFiles = (params) => Promisify((callback) => {
-  if (params.Delete.Objects.length > 0) {
-    s3.deleteObjects(params, callback);
-  } else {
-    callback(null, []);
-  }
+  s3.deleteObjects(params, callback);
 });
 
 const listRemoteFiles = (params) => Promisify((callback) => {
@@ -81,7 +77,10 @@ const removeMulti = (removePaths) => {
       Objects: removePaths.map((removePath) => ({ Key: removePath })),
     },
   };
-  return removeRemoteFiles(params);
+  if (params.Delete.Objects.length > 0) {
+    return removeRemoteFiles(params);
+  }
+  return [];
 };
 
 const uploadFiles = (localDirPath, remoteDirPath) => listLocalDir(localDirPath)
