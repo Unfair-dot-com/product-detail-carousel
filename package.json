@@ -6,7 +6,7 @@
   "scripts": {
     "server-dev": "nodemon server/index.js",
     "client-dev": "webpack --config webpack.dev.config.js",
-    "db-init": "node server/database/init.js"
+    "init": "node server/init.js"
   },
   "repository": {
     "type": "git",
