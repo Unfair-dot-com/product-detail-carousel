@@ -1,9 +1,9 @@
 const db = require('./wrapper');
 
 const formatProduct = (document) => ({
-  _id: Number.parseInt(document._id, 10) || undefined,
+  _id: String(document._id) || '0',
   name: String(document.name) || '',
-  decription: String(document.description) || '',
+  description: String(document.description) || '',
   image_url: String(document.image_url) || '',
   brand: String(document.brand) || '',
   price: String(document.price) || '$0.00',
