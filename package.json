@@ -6,7 +6,8 @@
   "scripts": {
     "server-dev": "nodemon server/index.js",
     "client-dev": "webpack --config webpack.dev.config.js",
-    "init": "node server/init.js"
+    "init": "node server/init.js",
+    "test": "jest --collectCoverage"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@babel/core": "^7.11.1",
     "@babel/preset-react": "^7.10.4",
+    "@shelf/jest-mongodb": "^1.2.2",
     "babel-loader": "^8.1.0",
     "eslint": "^7.6.0",
     "eslint-config-airbnb": "^18.2.0",
@@ -28,6 +30,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "jest": "^26.3.0",
     "nodemon": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -39,5 +42,9 @@
     "express": "^4.17.1",
     "faker": "^4.1.0",
     "mongodb": "^3.6.0"
+  },
+  "jest": {
+    "verbose": true,
+    "preset": "@shelf/jest-mongodb"
   }
 }
