@@ -7,7 +7,7 @@
     "server-dev": "nodemon server/index.js",
     "client-dev": "webpack --config webpack.dev.config.js",
     "init": "node server/init.js",
-    "test": "jest"
+    "test": "jest --collectCoverage"
   },
   "repository": {
     "type": "git",

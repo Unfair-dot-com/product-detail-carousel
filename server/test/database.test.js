@@ -1,6 +1,6 @@
 const db = require('../database');
 
-beforeAll((done) => {
+beforeEach((done) => {
   db.drop().then(() => {
     done();
   }).catch((error) => {
@@ -27,6 +27,24 @@ test('Should insert a new product record in the db', (done) => {
   });
 });
 
+test('Should insert a new product record array in the db', (done) => {
+  const dataObject = {
+    _id: '0',
+    name: 'Product Name',
+    description: 'Product Description',
+    image_url: 'Image URL',
+    brand: 'Product Brand',
+    price: '$9.99',
+    review_score: 4.88,
+    review_count: 245,
+  };
+  const dataArray = [dataObject];
+  db.insert(dataArray).then((results) => {
+    expect(results.ops).toEqual(dataArray);
+    done();
+  });
+});
+
 test('Should find the new product record in the db', (done) => {
   const dataObject = {
     _id: '0',
@@ -39,17 +57,32 @@ test('Should find the new product record in the db', (done) => {
     review_count: 245,
   };
   const dataArray = [dataObject];
-  db.find().then((results) => {
-    expect(results).toEqual(dataArray);
-    done();
+  db.insert(dataObject).then(() => {
+    db.find().then((results) => {
+      expect(results).toEqual(dataArray);
+      done();
+    });
   });
 });
 
 test('Should delete the products collection in the db', (done) => {
-  db.drop().then(() => {
-    db.find().then((results) => {
-      expect(results).toEqual([]);
-      done();
+  const dataObject = {
+    _id: '0',
+    name: 'Product Name',
+    description: 'Product Description',
+    image_url: 'Image URL',
+    brand: 'Product Brand',
+    price: '$9.99',
+    review_score: 4.88,
+    review_count: 245,
+  };
+  const dataArray = [dataObject];
+  db.insert(dataObject).then(() => {
+    db.drop().then(() => {
+      db.find().then((results) => {
+        expect(results).toEqual([]);
+        done();
+      });
     });
   });
 });
