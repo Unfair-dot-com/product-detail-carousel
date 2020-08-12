@@ -34,7 +34,6 @@ test('Should remove files from remote test dir.', (done) => {
     });
 });
 
-
 test('Should list files in remote test dir.', (done) => {
   fs.uploadFiles(localDir, remoteDir)
     .then(() => fs.listRemoteDir(remoteDir))
