@@ -11,3 +11,6 @@ server/config/api_keys.js
 
 # Ignore the package-lock.json file
 package-lock.json
+
+# Ignore other files
+.DS_Store
