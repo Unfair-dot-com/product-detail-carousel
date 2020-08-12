@@ -24,15 +24,18 @@ const generateRandomData = () => {
       }
       db.drop()
         .catch((error) => {
-          console.log('Deleting products collection failed:', error);
-          if (error) {
-            console.log('Deleting products collection failed:', error);
+          if (error.codeName === 'NamespaceNotFound') {
+            console.log('Products collection doesn\'t exist.');
+            console.log('error.ok:', error.ok);
+            console.log('error.code:', error.code);
+            console.log('error.codeName:', error.codeName);
+          } else {
+            throw error;
           }
-          return error;
         })
         .then(() => {
           db.insert(data).then((results) => {
-            console.log('Random data records:', results.ops);
+            // console.log('Random data records:', results.ops);
             console.log('Random data count in:', results.insertedCount);
             console.log('Random data ids:', results.insertedIds);
             db.connection.then((connect) => {
