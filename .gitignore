@@ -1,6 +1,7 @@
 # Ignore directories
 node_modules
 images
+coverage
 
 # Ignore bundle JS files inside the public directory
 public/*.js
