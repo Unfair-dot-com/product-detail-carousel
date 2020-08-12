@@ -1,3 +1,80 @@
+// jest.setMock('../config/db', {
+//   url: process.env.MONGO_URL,
+//   name: 'pdc-test',
+// });
+
+jest.mock('mongodb', () => {
+  const memo = {
+    url: undefined,
+    db: undefined,
+    collection: undefined,
+    data: [],
+  };
+
+  const report = (name) => {
+    const message = `Invoking ${name}, with the state:`;
+    // console.log(message, memo);
+    return message;
+  };
+
+  const toArray = (cb) => {
+    report('toArray');
+    cb(null, memo.data);
+  };
+
+  const find = () => {
+    report('find');
+    return { toArray };
+  };
+
+  const insertMany = (data, cb) => {
+    memo.data = data;
+    const result = {
+      ops: data,
+      insertedCount: data.length,
+      insertedIds: data.map((item) => item._id),
+    };
+    report('insertMany');
+    cb(null, result);
+  };
+
+  const drop = (cb) => {
+    memo.data = [];
+    report('drop');
+    cb(null, true);
+  };
+
+  const collection = (name, cb) => {
+    memo.collection = name;
+    report('collection');
+    cb(null, { drop, insertMany, find });
+  };
+
+  const db = (name) => {
+    memo.db = name;
+    report('db');
+    return { collection };
+  };
+
+  const close = () => {
+    report('close');
+    return true;
+  };
+
+  const connect = (cb) => {
+    report('connect');
+    cb(null, { db, close });
+  };
+
+  const MongoClient = function(url) {
+    memo.url = url;
+    report('MongoClient');
+    return { connect };
+  };
+
+  return { MongoClient };
+});
+
 const db = require('../database');
 
 beforeEach((done) => {
@@ -5,6 +82,17 @@ beforeEach((done) => {
     done();
   }).catch((error) => {
     console.log('db.drop() error:', error.codeName);
+    done();
+  });
+});
+
+afterAll((done) => {
+  jest.resetModules();
+  db.connection.then((connect) => {
+    connect.client.close();
+    done();
+  }).catch((error) => {
+    console.log('db.connection error:', error.codeName);
     done();
   });
 });
