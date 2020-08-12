@@ -77,10 +77,7 @@ const removeMulti = (removePaths) => {
       Objects: removePaths.map((removePath) => ({ Key: removePath })),
     },
   };
-  if (params.Delete.Objects.length > 0) {
-    return removeRemoteFiles(params);
-  }
-  return [];
+  return removeRemoteFiles(params);
 };
 
 const uploadFiles = (localDirPath, remoteDirPath) => listLocalDir(localDirPath)
