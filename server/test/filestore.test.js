@@ -15,6 +15,17 @@ beforeEach((done) => {
     });
 });
 
+afterAll((done) => {
+  fs.removeFiles(remoteDir)
+    .then(() => {
+      done();
+    })
+    .catch((error) => {
+      console.log('fs.removeFiles error:', error.code);
+      done();
+    });
+});
+
 test('Should upload files from local images dir to remote test dir.', (done) => {
   fs.uploadFiles(localDir, remoteDir)
     .then(() => fs.listRemoteDir(remoteDir))
@@ -33,7 +44,6 @@ test('Should remove files from remote test dir.', (done) => {
       done();
     });
 });
-
 
 test('Should list files in remote test dir.', (done) => {
   fs.uploadFiles(localDir, remoteDir)
