@@ -1,7 +1,7 @@
 const fs = require('../filestore');
 
 const remoteDir = 'test';
-const localDir = './images';
+const localDir = 'server/test/images';
 const images = ['test/image_0.jpg', 'test/image_1.jpg'];
 
 beforeEach((done) => {
@@ -10,7 +10,7 @@ beforeEach((done) => {
       done();
     })
     .catch((error) => {
-      console.log('fs.removeFiles error:', error);
+      console.log('fs.removeFiles error:', error.code);
       done();
     });
 });
