@@ -1,5 +1,6 @@
 const React = require('react');
 const axios = require('axios');
+const Carousel = require('./components/product-carousel.jsx');
 
 class App extends React.Component {
   constructor(props) {
@@ -32,10 +33,9 @@ class App extends React.Component {
   }
 
   render() {
+    const { products } = this.state;
     return (
-      <ul>
-        {this.state.products.map((product) => (<li key={product._id}>{product.name}</li>))}
-      </ul>
+      <Carousel products={products} />
     );
   }
 }
