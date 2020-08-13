@@ -16,7 +16,8 @@ class App extends React.Component {
 
   getProducts() {
     const path = '/api/pdc/';
-    const id = window.location.pathname.match(/\d+/)[0];
+    const idMatch = window.location.pathname.match(/\d+/);
+    const [id] = idMatch || ['0'];
     const uri = `${path}${id}`;
     axios(uri)
       .then((response) => this.updateProducts(response.data))
