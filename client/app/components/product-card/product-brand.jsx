@@ -1,9 +1,12 @@
 const React = require('react');
+const style = require('styled-components').default;
+const Heading = require('../lib/heading.jsx');
 
-const Brand = ({ product }) => (
-  <div className="product-brand">
-    <h2>{product.brand}</h2>
-  </div>
-);
+const Brand = ({ product }) => {
+  const HeadingBrand = style(Heading)``;
+  return (
+    <HeadingBrand>{product.brand}</HeadingBrand>
+  );
+};
 
 module.exports = Brand;
