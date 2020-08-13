@@ -1,6 +1,6 @@
 const React = require('react');
 const axios = require('axios');
-const Carousel = require('./components/product-carousel.jsx');
+const Carousel = require('./components/product-carousel/index.jsx');
 
 class App extends React.Component {
   constructor(props) {
