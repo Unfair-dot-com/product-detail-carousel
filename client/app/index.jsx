@@ -1,5 +1,6 @@
 const React = require('react');
 const axios = require('axios');
+const Carousel = require('./components/product-carousel.jsx');
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +17,8 @@ class App extends React.Component {
 
   getProducts() {
     const path = '/api/pdc/';
-    const id = window.location.pathname.match(/\d+/)[0];
+    const idMatch = window.location.pathname.match(/\d+/);
+    const [id] = idMatch || ['0'];
     const uri = `${path}${id}`;
     axios(uri)
       .then((response) => this.updateProducts(response.data))
@@ -31,10 +33,9 @@ class App extends React.Component {
   }
 
   render() {
+    const { products } = this.state;
     return (
-      <ul>
-        {this.state.products.map((product) => (<li key={product._id}>{product.name}</li>))}
-      </ul>
+      <Carousel products={products} />
     );
   }
 }
