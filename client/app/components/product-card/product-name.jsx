@@ -1,9 +1,9 @@
 const React = require('react');
-const styled = require('styled-components');
+const style = require('styled-components').default;
 const Heading = require('../lib/heading.jsx');
 
 const Name = ({ product }) => {
-  const HeadingName = styled.default(Heading)`
+  const HeadingName = style(Heading)`
     height: 2.4em;
     margin-top: 8px;`;
   return (

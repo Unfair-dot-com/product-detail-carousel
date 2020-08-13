@@ -1,9 +1,9 @@
 const React = require('react');
-const styled = require('styled-components');
+const style = require('styled-components').default;
 const Heading = require('../lib/heading.jsx');
 
 const Price = ({ product }) => {
-  const HeadingPrice = styled.default(Heading)`
+  const HeadingPrice = style(Heading)`
     color: #c4113f;
     font-size: 17.5px;
     line-height: 1.5;

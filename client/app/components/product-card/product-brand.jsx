@@ -1,9 +1,9 @@
 const React = require('react');
-const styled = require('styled-components');
+const style = require('styled-components').default;
 const Heading = require('../lib/heading.jsx');
 
 const Brand = ({ product }) => {
-  const HeadingBrand = styled.default(Heading)``;
+  const HeadingBrand = style(Heading)``;
   return (
     <HeadingBrand>{product.brand}</HeadingBrand>
   );

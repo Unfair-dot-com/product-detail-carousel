@@ -1,7 +1,7 @@
 // const React = require('react');
-const styled = require('styled-components');
+const style = require('styled-components').default;
 
-const Link = styled.default.a`
+const Link = style.a`
   font-size: 16px;
   text-decoration: none;
   color: #7f187f;

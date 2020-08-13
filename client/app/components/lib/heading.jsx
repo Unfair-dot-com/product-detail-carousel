@@ -1,7 +1,7 @@
 // const React = require('react');
-const styled = require('styled-components');
+const style = require('styled-components').default;
 
-const Heading = styled.default.h2`
+const Heading = style.h2`
   display: block;
   max-width: 100%;
   margin: 0;
