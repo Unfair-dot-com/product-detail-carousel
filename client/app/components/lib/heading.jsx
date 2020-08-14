@@ -8,7 +8,7 @@ const Heading = style.h2`
   padding: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
   color: #221924;
   line-height: 1.2;
   font-size: 16px;

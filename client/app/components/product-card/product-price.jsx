@@ -1,5 +1,6 @@
 const React = require('react');
 const style = require('styled-components').default;
+const Container = require('../lib/container.jsx');
 const Heading = require('../lib/heading.jsx');
 
 const Price = ({ product }) => {
@@ -9,7 +10,9 @@ const Price = ({ product }) => {
     line-height: 1.5;
     margin-top: 8px;`;
   return (
-    <HeadingPrice>{product.price}</HeadingPrice>
+    <Container>
+      <HeadingPrice>{product.price}</HeadingPrice>
+    </Container>
   );
 };
 
