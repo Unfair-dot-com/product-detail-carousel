@@ -8,10 +8,6 @@ const Carousel = ({ products }) => {
   const OuterContainer = style(Container)`
     position: relative;
     overflow: hidden;`;
-  const ButtonLeft = style(Button)`
-    left: 16px;`;
-  const ButtonRight = style(Button)`
-    right: 16px`;
   const InnerContainer = style(Container)`
     padding: 12px 4px;
     overflow: hidden;`;

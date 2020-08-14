@@ -10,7 +10,7 @@ const Reviews = require('./product-reviews.jsx');
 
 const Card = ({ product }) => {
   const ContainerOuter = style(Container)``;
-  const ContainerInner = style(Container)`
+  const CardBox = style(Container)`
     position: relative;
     display: flex;
     flex-grow: 1;
@@ -33,7 +33,7 @@ const Card = ({ product }) => {
     outline: 0;`;
   return (
     <ContainerOuter>
-      <ContainerInner>
+      <CardBox>
         <LinkCard href={product._id}>
           <Image product={product} />
           <Name product={product} />
@@ -41,7 +41,7 @@ const Card = ({ product }) => {
           <Price product={product} />
           <Reviews product={product} />
         </LinkCard>
-      </ContainerInner>
+      </CardBox>
     </ContainerOuter>
   );
 };
