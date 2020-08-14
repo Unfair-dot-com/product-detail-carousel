@@ -3,12 +3,17 @@ const style = require('styled-components').default;
 const { css } = require('styled-components');
 
 const cssButton = (props) => {
+  let styling = '';
+  if (props.hide) {
+    styling += css`display: none;`;
+  }
   if (props.side === 'left') {
-    return css`left: 16px;`;
+    styling += css`left: 16px;`;
   }
   if (props.side === 'right') {
-    return css`right: 16px;`;
+    styling += css`right: 16px;`;
   }
+  return styling;
 };
 
 const cssSvg = (props) => {
@@ -73,8 +78,8 @@ const Title = style.title``;
 const Path = style.path`
   d: path("M 11.3 8.9 c -0.4 0.4 -0.4 1 -0.1 1.4 l 3.5 3.8 l -3.4 3.8 c -0.4 0.4 -0.3 1 0.1 1.4 c 0.4 0.4 1 0.3 1.4 -0.1 l 4 -4.5 c 0.2 -0.2 0.3 -0.4 0.3 -0.7 s -0.1 -0.5 -0.3 -0.7 l -4 -4.5 c -0.4 -0.3 -1.1 -0.3 -1.5 0.1 Z");`;
 
-const CarouselButton = ({ title, side, click }) => (
-  <Button side={side} onClick={click}>
+const CarouselButton = ({ title, side, click, hide }) => (
+  <Button side={side} onClick={click} hide={hide}>
     <Svg side={side}>
       <Title>{title}</Title>
       <Path />

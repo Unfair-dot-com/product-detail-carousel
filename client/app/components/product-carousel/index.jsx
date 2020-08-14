@@ -18,35 +18,55 @@ class Carousel extends React.Component {
     this.state = {
       position: 0,
       cardWidth: 220,
+      totalWidth: 1100,
+      hideLeft: true,
+      hideRight: false,
     };
+    this.moveSlides = this.moveSlides.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
+    this.setState = this.setState.bind(this);
+  }
+
+  moveSlides(direction) {
+    this.setState((prevState, props) => {
+      let position = 0;
+      let hideLeft = true;
+      let hideRight = true;
+      if (direction === 'next') {
+        position = prevState.position - prevState.cardWidth;
+      }
+      if (direction === 'previous') {
+        position = prevState.position + prevState.cardWidth;
+      }
+      if (position < 0) {
+        hideLeft = false;
+      }
+      if ((prevState.totalWidth + position) > 0) {
+        hideRight = false;
+      }
+      return { position, hideLeft, hideRight };
+    });
   }
 
   nextSlide() {
-    console.log('nextSlide');
-    this.setState((prevState, props) => (
-      { position: prevState.position - prevState.cardWidth }
-    ));
+    this.moveSlides('next');
   }
 
   previousSlide() {
-    console.log('previousSlide');
-    this.setState((prevState, props) => (
-      { position: prevState.position + prevState.cardWidth }
-    ));
+    this.moveSlides('previous');
   }
 
   render() {
     const { products } = this.props;
-    const { position } = this.state;
+    const { position, hideLeft, hideRight } = this.state;
     return (
       <OuterContainer>
-        <Button side="left" title="Previous Slide" click={this.previousSlide} />
+        <Button side="left" title="Previous Slide" click={this.previousSlide} hide={hideLeft} />
         <InnerContainer>
           <ProductList products={products} position={position} />
         </InnerContainer>
-        <Button side="right" title="Next Slide" click={this.nextSlide} />
+        <Button side="right" title="Next Slide" click={this.nextSlide} hide={hideRight} />
       </OuterContainer>
     );
   }
