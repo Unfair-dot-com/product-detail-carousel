@@ -3,15 +3,15 @@ const style = require('styled-components').default;
 const Container = require('../lib/container.jsx');
 const Heading = require('../lib/heading.jsx');
 
-const HeadingName = style(Heading)`
+const HeadingDescription = style(Heading)`
   display: -webkit-box;
   height: 2.4em;
   margin-top: 8px;`;
 
-const Name = ({ product }) => (
+const Description = ({ product }) => (
   <Container>
-    <HeadingName>{product.name}</HeadingName>
+    <HeadingDescription>{product.description}</HeadingDescription>
   </Container>
 );
 
-module.exports = Name;
+module.exports = Description;
