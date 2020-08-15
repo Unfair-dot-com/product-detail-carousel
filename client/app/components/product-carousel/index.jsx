@@ -15,7 +15,7 @@ const InnerContainer = style(Container)`
   padding: 12px 4px;
   overflow: hidden;`;
 
-const UL = style.ul`
+const ProductList = style.ul`
   position: relative;
   display: flex;
   flex-wrap: nowrap;
@@ -28,7 +28,7 @@ const UL = style.ul`
   transition-property: background-color,transform,color,border-color,margin,left;
   ${left}`;
 
-const LI = style.li`
+const ProductListItem = style.li`
   position: relative;
   display: list-item;
   flex: 0 0 40%;
@@ -114,13 +114,13 @@ class Carousel extends React.Component {
       <OuterContainer>
         <Button side="left" title="Previous Slide" click={this.previousSlide} hide={hideLeft} />
         <InnerContainer>
-          <UL position={position} ref={this.productList}>
+          <ProductList position={position} ref={this.productList}>
             {products.map((product) => (
-              <LI key={product._id}>
+              <ProductListItem key={product._id}>
                 <Card product={product} />
-              </LI>
+              </ProductListItem>
             ))}
-          </UL>
+          </ProductList>
         </InnerContainer>
         <Button side="right" title="Next Slide" click={this.nextSlide} hide={hideRight} />
       </OuterContainer>
