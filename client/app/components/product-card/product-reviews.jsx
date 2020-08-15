@@ -17,7 +17,7 @@ const ReviewsContainer = style(Container)`
 
 const ReviewCount = style(Heading)`
   position: absolute;
-  left: 82px;
+  left: 88px;
   color: #615c65;
   line-height: 1;`;
 
@@ -25,8 +25,8 @@ const StarsTemplate = style.div`
   position: absolute;
   left: 0;
   top: 0;
-  width: 78px;
-  height: 13px;
+  width: 84px;
+  height: 14px;
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg'

@@ -7,6 +7,7 @@ const Name = require('./product-name.jsx');
 const Brand = require('./product-brand.jsx');
 const Price = require('./product-price.jsx');
 const Reviews = require('./product-reviews.jsx');
+const QuickViewButton = require('./quickview-button.jsx');
 
 const ContainerOuter = style(Container)``;
 
@@ -44,6 +45,7 @@ const Card = ({ product }) => (
         <Reviews product={product} />
       </LinkCard>
     </CardBox>
+    <QuickViewButton name="Quickview" />
   </ContainerOuter>
 );
 

@@ -23,9 +23,8 @@ const ProductList = style.ul`
   margin: 0;
   padding: 0;
   list-style: none;
-  transition-duration: .25s;
-  transition-timing-function: cubic-bezier(.65,.05,.36,1);
-  transition-property: background-color,transform,color,border-color,margin,left;
+  transition: transform 250ms cubic-bezier(.53,.34,.51,.9);
+  transition-property: all;
   ${left}`;
 
 const ProductListItem = style.li`

@@ -3,12 +3,14 @@ const style = require('styled-components').default;
 const Container = require('../lib/container.jsx');
 const Heading = require('../lib/heading.jsx');
 
-const HeadingBrand = style(Heading)``;
+const BrandContainer = style(Container)``;
+
+const BrandHeading = style(Heading)``;
 
 const Brand = ({ product }) => (
-  <Container>
-    <HeadingBrand>{product.brand}</HeadingBrand>
-  </Container>
+  <BrandContainer>
+    <BrandHeading>{product.brand}</BrandHeading>
+  </BrandContainer>
 );
 
 module.exports = Brand;

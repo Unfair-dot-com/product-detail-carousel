@@ -1,4 +1,3 @@
-// const React = require('react');
 const style = require('styled-components').default;
 
 const Image = style.img`
@@ -13,6 +12,7 @@ const Image = style.img`
   bottom: 0;
   margin: auto;
   height: auto;
-  border: 0;`;
+  border: 0;
+  box-sizing: border-box;`;
 
 module.exports = Image;

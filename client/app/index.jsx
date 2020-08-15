@@ -1,5 +1,6 @@
 const React = require('react');
 const axios = require('axios');
+const Global = require('./components/lib/global-styling.jsx');
 const Carousel = require('./components/product-carousel/index.jsx');
 
 class App extends React.Component {
@@ -35,7 +36,10 @@ class App extends React.Component {
   render() {
     const { products } = this.state;
     return (
-      <Carousel products={products} />
+      <div>
+        <Global />
+        <Carousel products={products} />
+      </div>
     );
   }
 }

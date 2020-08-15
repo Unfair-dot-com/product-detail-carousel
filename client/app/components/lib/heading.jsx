@@ -1,4 +1,3 @@
-// const React = require('react');
 const style = require('styled-components').default;
 
 const Heading = style.h2`
@@ -13,6 +12,7 @@ const Heading = style.h2`
   line-height: 1.2;
   font-size: 16px;
   font-weight: 400;
-  font-family: sofia,arial,sans-serif;`;
+  font-family: sofia,arial,sans-serif;
+  box-sizing: border-box;`;
 
 module.exports = Heading;

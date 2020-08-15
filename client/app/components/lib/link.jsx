@@ -1,4 +1,3 @@
-// const React = require('react');
 const style = require('styled-components').default;
 
 const Link = style.a`
@@ -6,6 +5,7 @@ const Link = style.a`
   text-decoration: none;
   color: #7f187f;
   font-family: sofia,arial,sans-serif;
-  cursor: pointer;`;
+  cursor: pointer;
+  box-sizing: border-box;`;
 
 module.exports = Link;
