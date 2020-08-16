@@ -5,7 +5,8 @@ const Heading = require('../lib/heading.jsx');
 
 const BrandContainer = style(Container)``;
 
-const BrandHeading = style(Heading)``;
+const BrandHeading = style(Heading)`
+  white-space: nowrap;`;
 
 const Brand = ({ product }) => (
   <BrandContainer>

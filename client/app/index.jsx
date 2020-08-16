@@ -2,8 +2,6 @@ const React = require('react');
 const axios = require('axios');
 const Global = require('./components/lib/global-styling.jsx');
 const Carousel = require('./components/product-carousel/index.jsx');
-const Description = require('./components/product-card/product-description.jsx');
-const Card = require('./components/product-card/index.jsx');
 
 class App extends React.Component {
   constructor(props) {
@@ -47,12 +45,11 @@ class App extends React.Component {
   }
 
   render() {
-    const { products, productMock } = this.state;
+    const { products } = this.state;
     return (
       <div>
         <Global />
-        <Card product={productMock} />
-        {/* <Carousel products={products} /> */}
+        <Carousel products={products} />
       </div>
     );
   }
