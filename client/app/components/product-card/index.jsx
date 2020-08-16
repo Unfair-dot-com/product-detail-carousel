@@ -67,7 +67,7 @@ const Card = ({ product, quickview, open, close}) => (
     </InnerShell>
     <QuickViewButton
       name="Quickview"
-      handleClick={open}
+      handleClick={() => open(product._id)}
       removed={quickview}
     />
   </OuterShell>

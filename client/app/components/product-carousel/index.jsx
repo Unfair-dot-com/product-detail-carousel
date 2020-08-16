@@ -51,6 +51,7 @@ class Carousel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      tracking: 0,
       position: 0,
       cardWidth: 0,
       totalWidth: 0,
@@ -60,10 +61,9 @@ class Carousel extends React.Component {
       quickview: false,
     };
     this.productList = React.createRef();
-    this.moveSlides = this.moveSlides.bind(this);
+    this.updatePosition = this.updatePosition.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
-    this.updateButtons = this.updateButtons.bind(this);
     this.openQuickView = this.openQuickView.bind(this);
     this.closeQuickView = this.closeQuickView.bind(this);
     this.setState = this.setState.bind(this);
@@ -75,29 +75,29 @@ class Carousel extends React.Component {
 
   updateDimensions(prevProps, prevState) {
     const list = this.productList.current;
-    const { position, cardWidth } = prevState;
+    const { cardWidth } = prevState;
     if (list === null || list.childNodes.length === 0) {
       return;
     }
     const containerWidth = list.offsetWidth;
     const newCardWidth = list.firstChild.offsetWidth + 8;
     const totalWidth = list.childNodes.length * newCardWidth;
-
     if (cardWidth !== newCardWidth) {
       this.setState(() => {
-        const { hideLeft, hideRight } = this.updateButtons(position, totalWidth, containerWidth);
-        return {
+        const newState = {
           cardWidth: newCardWidth,
           totalWidth,
           containerWidth,
-          hideLeft,
-          hideRight,
         };
+        const temp = this.updatePosition({ ...prevState, ...newState });
+        return { ...newState, ...temp };
       });
     }
   }
 
-  updateButtons(position, totalWidth, containerWidth) {
+  updatePosition({ tracking, cardWidth, totalWidth, containerWidth }) {
+    const ctx = this.state;
+    const position = -(tracking * cardWidth);
     let hideLeft = true;
     let hideRight = true;
     if (position < 0) {
@@ -106,52 +106,43 @@ class Carousel extends React.Component {
     if (((totalWidth - containerWidth) + position) > 0) {
       hideRight = false;
     }
-    return { hideLeft, hideRight };
-  }
-
-  moveSlides(direction) {
-    this.setState((prevState, props) => {
-      const {
-        position,
-        cardWidth,
-        totalWidth,
-        containerWidth,
-      } = prevState;
-      let newPosition = 0;
-      if (direction === 'next') {
-        newPosition = position - cardWidth;
-      }
-      if (direction === 'previous') {
-        newPosition = position + cardWidth;
-      }
-      const { hideLeft, hideRight } = this.updateButtons(newPosition, totalWidth, containerWidth);
-      return { position: newPosition, hideLeft, hideRight };
-    });
+    return {
+      tracking,
+      position,
+      hideLeft,
+      hideRight,
+    };
   }
 
   nextSlide() {
-    this.moveSlides('next');
+    this.setState((prevState) => {
+      const tracking = prevState.tracking + 1;
+      return this.updatePosition({ ...prevState, tracking });
+    });
   }
 
   previousSlide() {
-    this.moveSlides('previous');
+    this.setState((prevState) => {
+      const tracking = prevState.tracking - 1;
+      return this.updatePosition({ ...prevState, tracking });
+    });
   }
 
-  openQuickView() {
-    this.setState(() => (
-      { quickview: true }
-    ));
+  openQuickView(id) {
+    this.setState((prevState) => {
+      const tracking = Number.parseInt(id, 10);
+      const newState = this.updatePosition({ ...prevState, tracking });
+      return { ...newState, quickview: true };
+    });
   }
 
   closeQuickView() {
     this.setState((prevState, props) => {
-      const { position, totalWidth, containerWidth } = prevState;
-      const { hideLeft, hideRight } = this.updateButtons(position, totalWidth, containerWidth);
+      const newState = this.updatePosition(prevState);
       return {
+        ...newState,
         quickview: false,
         position: 0,
-        hideLeft,
-        hideRight,
       };
     });
   }
