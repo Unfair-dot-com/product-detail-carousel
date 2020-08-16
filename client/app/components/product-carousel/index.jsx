@@ -48,11 +48,14 @@ class Carousel extends React.Component {
       containerWidth: 0,
       hideLeft: true,
       hideRight: false,
+      quickview: false,
     };
     this.productList = React.createRef();
     this.moveSlides = this.moveSlides.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
+    this.openQuickView = this.openQuickView.bind(this);
+    this.closeQuickView = this.closeQuickView.bind(this);
     this.setState = this.setState.bind(this);
   }
 
@@ -106,9 +109,21 @@ class Carousel extends React.Component {
     this.moveSlides('previous');
   }
 
+  openQuickView() {
+    this.setState(() => (
+      { quickview: true }
+    ));
+  }
+
+  closeQuickView() {
+    this.setState(() => (
+      { quickview: false }
+    ));
+  }
+
   render() {
     const { products } = this.props;
-    const { position, hideLeft, hideRight } = this.state;
+    const { position, hideLeft, hideRight, quickview } = this.state;
     return (
       <OuterContainer>
         <Button side="left" title="Previous Slide" click={this.previousSlide} hide={hideLeft} />
@@ -116,7 +131,12 @@ class Carousel extends React.Component {
           <ProductList position={position} ref={this.productList}>
             {products.map((product) => (
               <ProductListItem key={product._id}>
-                <Card product={product} />
+                <Card
+                  product={product}
+                  quickview={quickview}
+                  open={this.openQuickView}
+                  close={this.closeQuickView}
+                />
               </ProductListItem>
             ))}
           </ProductList>

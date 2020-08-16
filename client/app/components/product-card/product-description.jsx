@@ -53,9 +53,9 @@ const DescriptionText = style.p`
   padding: 0;
   margin-top: 8px;`;
 
-const Description = ({ product, hide }) => (
+const Description = ({ product, hide, close }) => (
   <DescriptionOuterShell hide={hide}>
-    <CloseButton />
+    <CloseButton handleClick={close} />
     <DescriptionInnerShell>
       <DescriptionText>{product.description}</DescriptionText>
     </DescriptionInnerShell>

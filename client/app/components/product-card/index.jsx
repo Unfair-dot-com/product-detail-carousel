@@ -1,5 +1,6 @@
 const React = require('react');
 const style = require('styled-components').default;
+const { css } = require('styled-components');
 const Container = require('../lib/container.jsx');
 const Link = require('../lib/link.jsx');
 const Image = require('./product-image.jsx');
@@ -10,13 +11,24 @@ const Reviews = require('./product-reviews.jsx');
 const Description = require('./product-description.jsx');
 const QuickViewButton = require('./quickview-button.jsx');
 
+const hide = (props) => {
+  let styling = '';
+  if (props.hide) {
+    styling += css`display: none;`;
+  }
+  return styling;
+};
+
 const OuterShell = style(Container)`
   position: relative;`;
 
-const InnerShell = style(Container)``;
+const InnerShell = style(Container)`
+  display: flex;
+  flex-wrap: nowrap;`;
 
 const CardBox = style(Container)`
   position: relative;
+  width: 40%;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
@@ -39,7 +51,7 @@ const ProductLink = style(Link)`
   outline: 0;
   text-decoration: none;`;
 
-const Card = ({ product }) => (
+const Card = ({ product, quickview, open, close}) => (
   <OuterShell>
     <InnerShell>
       <CardBox>
@@ -51,9 +63,13 @@ const Card = ({ product }) => (
           <Reviews product={product} />
         </ProductLink>
       </CardBox>
-      <Description product={product} hide={true}/>
+      <Description product={product} hide={!quickview} close={close} />
     </InnerShell>
-    <QuickViewButton name="Quickview" />
+    <QuickViewButton
+      name="Quickview"
+      handleClick={open}
+      removed={quickview}
+    />
   </OuterShell>
 );
 

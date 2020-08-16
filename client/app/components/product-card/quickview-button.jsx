@@ -14,6 +14,17 @@ const hide = (props) => {
   return styling;
 };
 
+const remove = (props) => {
+  let styling = '';
+  if (props.remove) {
+    styling += css`display: none;`;
+  }
+  // if (!props.remove) {
+  //   styling += css`display: flex;`;
+  // }
+  return styling;
+};
+
 const ButtonContainer = style(Container)`
   position: absolute;
   bottom: 0;
@@ -27,7 +38,8 @@ const ButtonContainer = style(Container)`
   border-radius: 0 0 8px 8px;
   transition: opacity .3s ease-out;
   box-sizing: border-box;
-  ${hide}`;
+  ${hide}
+  ${remove}`;
 
 const Button = style.button`
   color: #7f187f;
@@ -52,11 +64,12 @@ const Button = style.button`
     text-decoration: none;
   }`;
 
-const QuickviewButton = ({ name, handleClick }) => {
+const QuickviewButton = ({ name, handleClick, removed }) => {
   const [hidden, hideButton] = React.useState(true);
   return (
     <ButtonContainer
       hide={hidden}
+      remove={removed}
       onMouseEnter={(e) => hideButton(false)}
       onMouseLeave={(e) => hideButton(true)}
     >
