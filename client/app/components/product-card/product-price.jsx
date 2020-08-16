@@ -10,7 +10,6 @@ const HeadingPrice = style(Heading)`
   color: #c4113f;
   font-size: 17.5px;
   line-height: 1.5;
-
   @media screen and (min-width: 800px) {
     font-size: 25px;
   };`;

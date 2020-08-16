@@ -12,7 +12,6 @@ const fill = (props) => css`fill='${props.fill}'`;
 const ReviewsContainer = style(Container)`
   position: relative;
   height: 16px;
-  width: 100%;
   margin: 8px 0;`;
 
 const ReviewCount = style(Heading)`

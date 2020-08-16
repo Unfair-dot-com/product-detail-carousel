@@ -17,6 +17,8 @@ const hide = (props) => {
 const ButtonContainer = style(Container)`
   position: absolute;
   bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   background: #fff;
