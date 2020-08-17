@@ -3,15 +3,18 @@ const style = require('styled-components').default;
 const Container = require('../lib/container.jsx');
 const Heading = require('../lib/heading.jsx');
 
+const NameContainer = style(Container)`
+  margin-top: 8px;`;
+
 const HeadingName = style(Heading)`
   display: -webkit-box;
   height: 2.4em;
-  margin-top: 8px;`;
+  `;
 
 const Name = ({ product }) => (
-  <Container>
+  <NameContainer>
     <HeadingName>{product.name}</HeadingName>
-  </Container>
+  </NameContainer>
 );
 
 module.exports = Name;
