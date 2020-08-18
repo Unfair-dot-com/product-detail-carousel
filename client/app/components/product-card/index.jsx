@@ -11,22 +11,14 @@ const Reviews = require('./product-reviews.jsx');
 const Description = require('./product-description.jsx');
 const QuickViewButton = require('./quickview-button.jsx');
 
-const hide = (props) => {
-  let styling = '';
-  if (props.hide) {
-    styling += css`display: none;`;
-  }
-  return styling;
-};
-
-const OuterShell = style(Container)`
+const OuterContainer = style.div`
   position: relative;`;
 
-const InnerShell = style(Container)`
+const InnerContainer = style.div`
   display: flex;
   flex-wrap: nowrap;`;
 
-const CardBox = style(Container)`
+const CardBox = style.div`
   position: relative;
   width: 40%;
   display: flex;
@@ -52,8 +44,8 @@ const ProductLink = style(Link)`
   text-decoration: none;`;
 
 const Card = ({ product, quickview, open, close}) => (
-  <OuterShell>
-    <InnerShell>
+  <OuterContainer>
+    <InnerContainer>
       <CardBox>
         <ProductLink href={product._id}>
           <Image product={product} />
@@ -64,13 +56,13 @@ const Card = ({ product, quickview, open, close}) => (
         </ProductLink>
       </CardBox>
       <Description product={product} hide={!quickview} close={close} />
-    </InnerShell>
+    </InnerContainer>
     <QuickViewButton
       name="Quickview"
       handleClick={() => open(product._id)}
       removed={quickview}
     />
-  </OuterShell>
+  </OuterContainer>
 );
 
 module.exports = Card;
