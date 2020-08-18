@@ -1,7 +1,7 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const style = require('styled-components').default;
 const { css } = require('styled-components');
-const Container = require('../lib/container.jsx');
 const Button = require('./button.jsx');
 const Card = require('../product-card/index.jsx');
 
@@ -15,11 +15,11 @@ const resize = ({ quickview }) => {
   return styling;
 };
 
-const OuterContainer = style(Container)`
+const OuterContainer = style.div`
   position: relative;
   overflow: hidden;`;
 
-const InnerContainer = style(Container)`
+const InnerContainer = style.div`
   padding: 12px 4px;
   overflow: hidden;`;
 
@@ -73,15 +73,16 @@ class Carousel extends React.Component {
     this.updateDimensions(prevProps, prevState);
   }
 
+  // How do we break out of the dependency on the child ProductList?
   updateDimensions(prevProps, prevState) {
     const list = this.productList.current;
-    const { cardWidth } = prevState;
     if (list === null || list.childNodes.length === 0) {
       return;
     }
     const containerWidth = list.offsetWidth;
     const newCardWidth = list.firstChild.offsetWidth + 8;
     const totalWidth = list.childNodes.length * newCardWidth;
+    const { cardWidth } = prevState;
     if (cardWidth !== newCardWidth) {
       this.setState(() => {
         const newState = {
@@ -137,12 +138,11 @@ class Carousel extends React.Component {
   }
 
   closeQuickView() {
-    this.setState((prevState, props) => {
+    this.setState((prevState) => {
       const newState = this.updatePosition(prevState);
       return {
         ...newState,
         quickview: false,
-        position: 0,
       };
     });
   }
@@ -177,5 +177,22 @@ class Carousel extends React.Component {
     );
   }
 }
+
+Carousel.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    image_url: PropTypes.string.isRequired,
+    brand: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+    review_score: PropTypes.number.isRequired,
+    review_count: PropTypes.number.isRequired,
+  })),
+};
+
+Carousel.defaultProps = {
+  products: PropTypes.array,
+};
 
 module.exports = Carousel;

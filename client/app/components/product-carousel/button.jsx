@@ -1,30 +1,33 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const style = require('styled-components').default;
 const { css } = require('styled-components');
 
-const cssButton = (props) => {
+const cssButton = ({ hide, side }) => {
   let styling = '';
-  if (props.hide) {
+  if (hide) {
     styling += css`display: none;`;
   }
-  if (props.side === 'left') {
+  if (side === 'left') {
     styling += css`left: 16px;`;
   }
-  if (props.side === 'right') {
+  if (side === 'right') {
     styling += css`right: 16px;`;
   }
   return styling;
 };
 
-const cssSvg = (props) => {
-  if (props.side === 'left') {
-    return css`
+const cssButtonIcon = ({ side }) => {
+  let styling = '';
+  if (side === 'left') {
+    styling += css`
       left: -1px;
       transform: scaleX(-1);`;
   }
-  if (props.side === 'right') {
-    return css`left: 1px;`;
+  if (side === 'right') {
+    styling += css`left: 1px;`;
   }
+  return styling;
 };
 
 const Button = style.button`
@@ -63,7 +66,7 @@ const Button = style.button`
   }
   ${cssButton};`;
 
-const Svg = style.svg`
+const ButtonIcon = style.svg`
   position: relative;
   width: 28px;
   height: 28px;
@@ -71,20 +74,25 @@ const Svg = style.svg`
   fill: currentColor;
   vertical-align: middle;
   pointer-events: none;
-  ${cssSvg};`;
+  ${cssButtonIcon};`;
 
-const Title = style.title``;
-
-const Path = style.path`
+const Arrow = style.path`
   d: path("M 11.3 8.9 c -0.4 0.4 -0.4 1 -0.1 1.4 l 3.5 3.8 l -3.4 3.8 c -0.4 0.4 -0.3 1 0.1 1.4 c 0.4 0.4 1 0.3 1.4 -0.1 l 4 -4.5 c 0.2 -0.2 0.3 -0.4 0.3 -0.7 s -0.1 -0.5 -0.3 -0.7 l -4 -4.5 c -0.4 -0.3 -1.1 -0.3 -1.5 0.1 Z");`;
 
 const CarouselButton = ({ title, side, click, hide }) => (
   <Button side={side} onClick={click} hide={hide}>
-    <Svg side={side}>
-      <Title>{title}</Title>
-      <Path />
-    </Svg>
+    <ButtonIcon side={side}>
+      <title>{title}</title>
+      <Arrow />
+    </ButtonIcon>
   </Button>
 );
+
+CarouselButton.propTypes = {
+  title: PropTypes.string.isRequired,
+  side: PropTypes.string.isRequired,
+  hide: PropTypes.bool.isRequired,
+  click: PropTypes.func.isRequired,
+};
 
 module.exports = CarouselButton;
