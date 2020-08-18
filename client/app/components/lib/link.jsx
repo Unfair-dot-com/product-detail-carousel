@@ -6,7 +6,6 @@ const Link = style.a`
   color: #7f187f;
   font-family: sofia,arial,sans-serif;
   cursor: pointer;
-  box-sizing: border-box;
   &:hover {
     text-decoration: none;
   }`;
