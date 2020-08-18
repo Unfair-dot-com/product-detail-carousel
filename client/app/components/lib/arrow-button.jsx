@@ -79,20 +79,28 @@ const ButtonIcon = style.svg`
 const Arrow = style.path`
   d: path("M 11.3 8.9 c -0.4 0.4 -0.4 1 -0.1 1.4 l 3.5 3.8 l -3.4 3.8 c -0.4 0.4 -0.3 1 0.1 1.4 c 0.4 0.4 1 0.3 1.4 -0.1 l 4 -4.5 c 0.2 -0.2 0.3 -0.4 0.3 -0.7 s -0.1 -0.5 -0.3 -0.7 l -4 -4.5 c -0.4 -0.3 -1.1 -0.3 -1.5 0.1 Z");`;
 
-const CarouselButton = ({ title, side, click, hide }) => (
-  <Button side={side} onClick={click} hide={hide}>
-    <ButtonIcon side={side}>
-      <title>{title}</title>
-      <Arrow />
-    </ButtonIcon>
-  </Button>
-);
+const ArrowButton = (props) => {
+  const {
+    title,
+    side,
+    click,
+    hide,
+  } = props;
+  return (
+    <Button side={side} onClick={click} hide={hide}>
+      <ButtonIcon side={side}>
+        <title>{title}</title>
+        <Arrow />
+      </ButtonIcon>
+    </Button>
+  );
+};
 
-CarouselButton.propTypes = {
+ArrowButton.propTypes = {
   title: PropTypes.string.isRequired,
   side: PropTypes.string.isRequired,
   hide: PropTypes.bool.isRequired,
   click: PropTypes.func.isRequired,
 };
 
-module.exports = CarouselButton;
+module.exports = ArrowButton;

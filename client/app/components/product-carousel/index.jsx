@@ -1,19 +1,8 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const style = require('styled-components').default;
-const { css } = require('styled-components');
-const Button = require('./button.jsx');
-const Card = require('../product-card/index.jsx');
-
-const left = ({ position }) => css`left: ${position || 0}px;`;
-
-const resize = ({ quickview }) => {
-  let styling = '';
-  if (quickview) {
-    styling += css`min-width: 100%; width: 100%;`;
-  }
-  return styling;
-};
+const Button = require('../lib/arrow-button.jsx');
+const ProductList = require('./product-list.jsx');
 
 const OuterContainer = style.div`
   position: relative;
@@ -22,30 +11,6 @@ const OuterContainer = style.div`
 const InnerContainer = style.div`
   padding: 12px 4px;
   overflow: hidden;`;
-
-const ProductList = style.ul`
-  position: relative;
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  transition: transform 250ms cubic-bezier(.53,.34,.51,.9);
-  transition-property: all;
-  ${left}`;
-
-const ProductListItem = style.li`
-  position: relative;
-  display: list-item;
-  flex: 0 0 40%;
-  max-width: 220px;
-  min-width: 172px;
-  margin: 0 8px 0 0;
-  padding: 0;
-  background: #fff;
-  border-radius: 8px;
-  ${resize}`;
 
 class Carousel extends React.Component {
   constructor(props) {
@@ -61,6 +26,7 @@ class Carousel extends React.Component {
       quickview: false,
     };
     this.productList = React.createRef();
+    this.productCarousel = React.createRef();
     this.updatePosition = this.updatePosition.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
@@ -73,13 +39,13 @@ class Carousel extends React.Component {
     this.updateDimensions(prevProps, prevState);
   }
 
-  // How do we break out of the dependency on the child ProductList?
   updateDimensions(prevProps, prevState) {
-    const list = this.productList.current;
+    const list = this.productList.current.firstChild;
     if (list === null || list.childNodes.length === 0) {
       return;
     }
     const containerWidth = list.offsetWidth;
+    // We do not want 8 hard codded here
     const newCardWidth = list.firstChild.offsetWidth + 8;
     const totalWidth = list.childNodes.length * newCardWidth;
     const { cardWidth } = prevState;
@@ -157,22 +123,27 @@ class Carousel extends React.Component {
     } = this.state;
     return (
       <OuterContainer>
-        <Button side="left" title="Previous Slide" click={this.previousSlide} hide={hideLeft} />
-        <InnerContainer>
-          <ProductList position={position} ref={this.productList}>
-            {products.map((product) => (
-              <ProductListItem key={product._id} quickview={quickview}>
-                <Card
-                  product={product}
-                  quickview={quickview}
-                  open={this.openQuickView}
-                  close={this.closeQuickView}
-                />
-              </ProductListItem>
-            ))}
-          </ProductList>
+        <Button
+          side="left"
+          title="Previous Slide"
+          click={this.previousSlide}
+          hide={hideLeft}
+        />
+        <InnerContainer ref={this.productList}>
+          <ProductList
+            products={products}
+            position={position}
+            quickview={quickview}
+            open={this.openQuickView}
+            close={this.closeQuickView}
+          />
         </InnerContainer>
-        <Button side="right" title="Next Slide" click={this.nextSlide} hide={hideRight} />
+        <Button
+          side="right"
+          title="Next Slide"
+          click={this.nextSlide}
+          hide={hideRight}
+        />
       </OuterContainer>
     );
   }
