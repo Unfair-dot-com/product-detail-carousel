@@ -1,7 +1,6 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const style = require('styled-components').default;
-const { css } = require('styled-components');
-const Container = require('../lib/container.jsx');
 const Link = require('../lib/link.jsx');
 const Image = require('./product-image.jsx');
 const Name = require('./product-name.jsx');
@@ -64,5 +63,22 @@ const Card = ({ product, quickview, open, close}) => (
     />
   </OuterContainer>
 );
+
+Card.propTypes = {
+  product: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    image_url: PropTypes.string.isRequired,
+    brand: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+    review_score: PropTypes.number.isRequired,
+    review_count: PropTypes.number.isRequired,
+  }),
+};
+
+Card.defaultProps = {
+  product: PropTypes.object,
+};
 
 module.exports = Card;
