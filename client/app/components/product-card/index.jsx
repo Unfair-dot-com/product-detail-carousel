@@ -55,10 +55,13 @@ const Card = (props) => {
         <CardBox>
           <ProductLink href={product.url}>
             <Image product={product} />
-            <Name product={product} />
-            <Brand product={product} />
-            <Price product={product} />
-            <Reviews product={product} />
+            <Name name={product.name} />
+            <Brand brand={product.brand} />
+            <Price price={product.price} />
+            <Reviews
+              score={product.review_score}
+              count={product.review_count}
+            />
           </ProductLink>
         </CardBox>
         <Description product={product} hide={!quickview} close={close} />
