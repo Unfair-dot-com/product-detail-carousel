@@ -1,8 +1,7 @@
 const React = require('react');
 const style = require('styled-components').default;
-const Container = require('../lib/container.jsx');
 
-const OuterContainer = style(Container)`
+const OuterContainer = style.div`
   position: relative;
   display: flex;
   flex-shrink: 0;
@@ -10,7 +9,7 @@ const OuterContainer = style(Container)`
   margin: -8px -8px 0;
   padding: 8px;`;
 
-const InnerContainer = style(Container)`
+const InnerContainer = style.div`
   position: relative;
   padding-bottom: 100%;`;
 
