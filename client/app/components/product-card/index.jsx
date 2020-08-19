@@ -75,6 +75,9 @@ Card.propTypes = {
     review_score: PropTypes.number.isRequired,
     review_count: PropTypes.number.isRequired,
   }),
+  quickview: PropTypes.bool.isRequired,
+  open: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {
