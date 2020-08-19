@@ -9,6 +9,7 @@ router.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   next();
 });
+router.use('/', publicFolder);
 router.use('/products/', publicFolder);
 router.use('/products/:id', publicFolder);
 router.get('/api/pdc/:id', pdc.get);
