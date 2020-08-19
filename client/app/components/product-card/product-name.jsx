@@ -2,7 +2,7 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const style = require('styled-components').default;
 
-const NameContainer = style.div`
+const Container = style.div`
   margin-top: 8px;`;
 
 const NameValue = style.h2`
@@ -18,9 +18,9 @@ const NameValue = style.h2`
   height: 2.4em;`;
 
 const Name = ({ name }) => (
-  <NameContainer>
+  <Container>
     <NameValue>{name}</NameValue>
-  </NameContainer>
+  </Container>
 );
 
 Name.propTypes = {

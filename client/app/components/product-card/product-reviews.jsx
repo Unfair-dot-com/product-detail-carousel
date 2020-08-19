@@ -7,26 +7,10 @@ const width = ({ score }) => css`width: ${(score / 5) * 84}px;`;
 
 const fill = ({ color }) => css`fill='${color}'`;
 
-const ReviewsContainer = style.div`
+const Container = style.div`
   position: relative;
   height: 16px;
   margin: 8px 0;`;
-
-const Count = style.p`
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
-  font-size: 16px;
-  font-weight: 400;
-  color: #221924;
-  line-height: 1.2;
-
-  position: absolute;
-  left: 88px;
-  color: #615c65;
-  line-height: 1;`;
 
 const StarsTemplate = style.div`
   position: absolute;
@@ -60,12 +44,28 @@ const Background = style(StarsTemplate)``;
 const Score = style(StarsTemplate)`
   ${width};`;
 
+const Count = style.p`
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  font-size: 16px;
+  font-weight: 400;
+  color: #221924;
+  line-height: 1.2;
+
+  position: absolute;
+  left: 88px;
+  color: #615c65;
+  line-height: 1;`;
+
 const Reviews = ({ score, count }) => (
-  <ReviewsContainer>
+  <Container>
     <Background color="%23d9d8db" />
     <Score score={score} color="%23f6b71d" />
     <Count>{count}</Count>
-  </ReviewsContainer>
+  </Container>
 );
 
 Reviews.propTypes = {

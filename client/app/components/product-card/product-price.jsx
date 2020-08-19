@@ -2,7 +2,7 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const style = require('styled-components').default;
 
-const PriceContainer = style.div`
+const Container = style.div`
   margin-top: 8px;`;
 
 const PriceValue = style.span`
@@ -18,9 +18,9 @@ const PriceValue = style.span`
   };`;
 
 const Price = ({ price }) => (
-  <PriceContainer>
+  <Container>
     <PriceValue>{price}</PriceValue>
-  </PriceContainer>
+  </Container>
 );
 
 Price.propTypes = {
