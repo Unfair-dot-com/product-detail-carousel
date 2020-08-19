@@ -42,31 +42,40 @@ const ProductLink = style(Link)`
   outline: 0;
   text-decoration: none;`;
 
-const Card = ({ product, quickview, open, close}) => (
-  <OuterContainer>
-    <InnerContainer>
-      <CardBox>
-        <ProductLink href={product._id}>
-          <Image product={product} />
-          <Name product={product} />
-          <Brand product={product} />
-          <Price product={product} />
-          <Reviews product={product} />
-        </ProductLink>
-      </CardBox>
-      <Description product={product} hide={!quickview} close={close} />
-    </InnerContainer>
-    <QuickViewButton
-      name="Quickview"
-      handleClick={() => open(product._id)}
-      removed={quickview}
-    />
-  </OuterContainer>
-);
+const Card = (props) => {
+  const {
+    product,
+    quickview,
+    open,
+    close,
+  } = props;
+  return (
+    <OuterContainer>
+      <InnerContainer>
+        <CardBox>
+          <ProductLink href={product.url}>
+            <Image product={product} />
+            <Name product={product} />
+            <Brand product={product} />
+            <Price product={product} />
+            <Reviews product={product} />
+          </ProductLink>
+        </CardBox>
+        <Description product={product} hide={!quickview} close={close} />
+      </InnerContainer>
+      <QuickViewButton
+        name="Quickview"
+        handleClick={() => open(product._id)}
+        removed={quickview}
+      />
+    </OuterContainer>
+  );
+};
 
 Card.propTypes = {
   product: PropTypes.shape({
     _id: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
     image_url: PropTypes.string.isRequired,

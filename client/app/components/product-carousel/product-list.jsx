@@ -67,6 +67,7 @@ const ProductList = (props) => {
 ProductList.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
     image_url: PropTypes.string.isRequired,

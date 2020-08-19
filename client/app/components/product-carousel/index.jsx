@@ -62,7 +62,13 @@ class Carousel extends React.Component {
     }
   }
 
-  updatePosition({ tracking, cardWidth, totalWidth, containerWidth }) {
+  updatePosition(state) {
+    const {
+      tracking,
+      cardWidth,
+      totalWidth,
+      containerWidth,
+    } = state;
     const ctx = this.state;
     const position = -(tracking * cardWidth);
     let hideLeft = true;
@@ -152,6 +158,7 @@ class Carousel extends React.Component {
 Carousel.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
     image_url: PropTypes.string.isRequired,

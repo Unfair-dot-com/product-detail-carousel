@@ -18,10 +18,10 @@ class App extends React.Component {
   }
 
   getProducts() {
-    const path = config.api_path;
+    const { host, apiPath } = config;
     const idMatch = window.location.pathname.match(/\d+/);
     const [id] = idMatch || ['0'];
-    const uri = `${path}${id}`;
+    const uri = `${host}${apiPath}${id}`;
     axios(uri)
       .then((response) => this.updateProducts(response.data))
       .catch((error) => {
@@ -30,7 +30,12 @@ class App extends React.Component {
   }
 
   updateProducts(products) {
-    this.setState(() => ({ products }));
+    const { host, path } = config;
+    const newProducts = products.map((product) => {
+      const url = `${host}${path}${product._id}`;
+      return { ...product, url };
+    });
+    this.setState(() => ({ products: newProducts }));
   }
 
   render() {
