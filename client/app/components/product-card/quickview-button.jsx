@@ -1,31 +1,28 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const style = require('styled-components').default;
 const { css } = require('styled-components');
-const Container = require('../lib/container.jsx');
 
-const hide = (props) => {
+const opacity = ({ hide }) => {
   let styling = '';
-  if (props.hide) {
+  if (hide) {
     styling += css`opacity: 0;`;
   }
-  if (!props.hide) {
+  if (!hide) {
     styling += css`opacity: 1;`;
   }
   return styling;
 };
 
-const remove = (props) => {
+const display = ({ removed }) => {
   let styling = '';
-  if (props.remove) {
+  if (removed) {
     styling += css`display: none;`;
   }
-  // if (!props.remove) {
-  //   styling += css`display: flex;`;
-  // }
   return styling;
 };
 
-const ButtonContainer = style(Container)`
+const Container = style.div`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -38,8 +35,8 @@ const ButtonContainer = style(Container)`
   border-radius: 0 0 8px 8px;
   transition: opacity .3s ease-out;
   box-sizing: border-box;
-  ${hide}
-  ${remove}`;
+  ${opacity}
+  ${display}`;
 
 const Button = style.button`
   color: #7f187f;
@@ -64,18 +61,24 @@ const Button = style.button`
     text-decoration: none;
   }`;
 
-const QuickviewButton = ({ name, handleClick, removed }) => {
-  const [hidden, hideButton] = React.useState(true);
+const QuickviewButton = ({ title, click, removed }) => {
+  const [hide, hideButton] = React.useState(true);
   return (
-    <ButtonContainer
-      hide={hidden}
-      remove={removed}
-      onMouseEnter={(e) => hideButton(false)}
-      onMouseLeave={(e) => hideButton(true)}
+    <Container
+      hide={hide}
+      removed={removed}
+      onMouseEnter={() => hideButton(false)}
+      onMouseLeave={() => hideButton(true)}
     >
-      <Button onClick={handleClick}>{name}</Button>
-    </ButtonContainer>
+      <Button onClick={click}>{title}</Button>
+    </Container>
   );
+};
+
+QuickviewButton.propTypes = {
+  title: PropTypes.string.isRequired,
+  click: PropTypes.func.isRequired,
+  removed: PropTypes.bool.isRequired,
 };
 
 module.exports = QuickviewButton;

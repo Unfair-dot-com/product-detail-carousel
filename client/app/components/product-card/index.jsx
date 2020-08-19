@@ -73,8 +73,8 @@ const Card = (props) => {
         />
       </InnerContainer>
       <QuickViewButton
-        name="Quickview"
-        handleClick={() => open(product.id)}
+        title="Quickview"
+        click={() => open(product.id)}
         removed={quickview}
       />
     </OuterContainer>
