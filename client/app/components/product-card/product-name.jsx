@@ -1,20 +1,30 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const style = require('styled-components').default;
-const Container = require('../lib/container.jsx');
-const Heading = require('../lib/heading.jsx');
 
-const NameContainer = style(Container)`
+const NameContainer = style.div`
   margin-top: 8px;`;
 
-const HeadingName = style(Heading)`
-  display: -webkit-box;
-  height: 2.4em;
-  `;
+const NameValue = style.h2`
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  font-size: 16px;
+  font-weight: 400;
+  color: #221924;
+  line-height: 1.2;
+  height: 2.4em;`;
 
-const Name = ({ product }) => (
+const Name = ({ name }) => (
   <NameContainer>
-    <HeadingName>{product.name}</HeadingName>
+    <NameValue>{name}</NameValue>
   </NameContainer>
 );
+
+Name.propTypes = {
+  name: PropTypes.string.isRequired,
+};
 
 module.exports = Name;
