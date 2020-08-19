@@ -64,7 +64,13 @@ const Card = (props) => {
             />
           </ProductLink>
         </CardBox>
-        <Description product={product} hide={!quickview} close={close} />
+        <Description
+          url={product.url}
+          description={product.description}
+          hide={!quickview}
+          close={close}
+          fullDetailsLinkTitle="See Full Details"
+        />
       </InnerContainer>
       <QuickViewButton
         name="Quickview"
