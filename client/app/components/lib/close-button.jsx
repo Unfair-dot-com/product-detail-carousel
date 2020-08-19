@@ -1,4 +1,5 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const style = require('styled-components').default;
 
 const ButtonContainer = style.div`
@@ -27,7 +28,7 @@ const Button = style.button`
     box-shadow: 0 0 0 1px #1364f1, 0 0 4px #1364f1;
   }`;
 
-const CloseIcon = style.svg`
+const ButtonIcon = style.svg`
   color: #615c65;
   width: 28px;
   height: 28px;
@@ -36,20 +37,23 @@ const CloseIcon = style.svg`
   vertical-align: middle;
   pointer-events: none;`;
 
-const CloseIconSign = style.path`
+const Close = style.path`
   d: path("M 15.4 14 l 3.3 -3.3 c 0.4 -0.4 0.4 -1 0 -1.4 s -1 -0.4 -1.4 0 L 14 12.6 l -3.3 -3.3 c -0.4 -0.4 -1 -0.4 -1.4 0 c -0.4 0.4 -0.4 1 0 1.4 l 3.3 3.3 l -3.3 3.3 c -0.4 0.4 -0.4 1 0 1.4 c 0.2 0.2 0.4 0.3 0.7 0.3 s 0.5 -0.1 0.7 -0.3 l 3.3 -3.3 l 3.3 3.3 c 0.2 0.2 0.5 0.3 0.7 0.3 s 0.5 -0.1 0.7 -0.3 c 0.4 -0.4 0.4 -1 0 -1.4 L 15.4 14 Z");`;
 
-const Title = style.title``;
-
-const CloseButton = ({ handleClick }) => (
+const CloseButton = ({ title, click }) => (
   <ButtonContainer>
-    <Button onClick={handleClick}>
-      <Title>Close</Title>
-      <CloseIcon>
-        <CloseIconSign />
-      </CloseIcon>
+    <Button onClick={click}>
+      <title>{title}</title>
+      <ButtonIcon>
+        <Close />
+      </ButtonIcon>
     </Button>
   </ButtonContainer>
 );
+
+CloseButton.propTypes = {
+  title: PropTypes.string.isRequired,
+  click: PropTypes.func.isRequired,
+};
 
 module.exports = CloseButton;

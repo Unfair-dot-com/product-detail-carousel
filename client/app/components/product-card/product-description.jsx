@@ -3,7 +3,7 @@ const style = require('styled-components').default;
 const { css } = require('styled-components');
 const Container = require('../lib/container.jsx');
 const Link = require('../lib/link.jsx');
-const CloseButton = require('./close-button.jsx');
+const CloseButton = require('../lib/close-button.jsx');
 
 const hide = (props) => {
   let styling = '';
@@ -55,7 +55,7 @@ const DescriptionText = style.p`
 
 const Description = ({ product, hide, close }) => (
   <DescriptionOuterShell hide={hide}>
-    <CloseButton handleClick={close} />
+    <CloseButton click={close} title="Close" />
     <DescriptionInnerShell>
       <DescriptionText>{product.description}</DescriptionText>
     </DescriptionInnerShell>

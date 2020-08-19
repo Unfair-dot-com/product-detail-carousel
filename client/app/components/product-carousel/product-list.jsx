@@ -51,7 +51,7 @@ const ProductList = (props) => {
   return (
     <List position={position}>
       {products.map((product) => (
-        <Product key={product._id} quickview={quickview}>
+        <Product key={product.id} quickview={quickview}>
           <Card
             product={product}
             quickview={quickview}
@@ -67,6 +67,7 @@ const ProductList = (props) => {
 ProductList.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string,

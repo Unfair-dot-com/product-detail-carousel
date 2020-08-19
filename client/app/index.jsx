@@ -32,8 +32,9 @@ class App extends React.Component {
   updateProducts(products) {
     const { host, path } = config;
     const newProducts = products.map((product) => {
-      const url = `${host}${path}${product._id}`;
-      return { ...product, url };
+      const id = product._id;
+      const url = `${host}${path}${id}`;
+      return { ...product, url, id };
     });
     this.setState(() => ({ products: newProducts }));
   }

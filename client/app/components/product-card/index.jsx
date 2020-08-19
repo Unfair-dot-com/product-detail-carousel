@@ -65,7 +65,7 @@ const Card = (props) => {
       </InnerContainer>
       <QuickViewButton
         name="Quickview"
-        handleClick={() => open(product._id)}
+        handleClick={() => open(product.id)}
         removed={quickview}
       />
     </OuterContainer>
@@ -75,6 +75,7 @@ const Card = (props) => {
 Card.propTypes = {
   product: PropTypes.shape({
     _id: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
