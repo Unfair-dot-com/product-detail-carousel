@@ -1,17 +1,26 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const style = require('styled-components').default;
-const Container = require('../lib/container.jsx');
-const Heading = require('../lib/heading.jsx');
 
-const BrandContainer = style(Container)``;
+const BrandValue = style.p`
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 400;
+  color: #221924;
+  line-height: 1.2;`;
 
-const BrandHeading = style(Heading)`
-  white-space: nowrap;`;
-
-const Brand = ({ product }) => (
-  <BrandContainer>
-    <BrandHeading>{product.brand}</BrandHeading>
-  </BrandContainer>
+const Brand = ({ brand }) => (
+  <div>
+    <BrandValue>{brand}</BrandValue>
+  </div>
 );
+
+Brand.propTypes = {
+  brand: PropTypes.string.isRequired,
+};
 
 module.exports = Brand;
