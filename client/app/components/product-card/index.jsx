@@ -88,7 +88,11 @@ Card.propTypes = {
     url: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
-    image_url: PropTypes.string.isRequired,
+    image_url: PropTypes.shape({
+      small: PropTypes.string.isRequired,
+      medium: PropTypes.string.isRequired,
+      large: PropTypes.string.isRequired,
+    }),
     brand: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
     review_score: PropTypes.number.isRequired,
