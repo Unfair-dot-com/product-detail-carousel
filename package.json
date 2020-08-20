@@ -8,7 +8,9 @@
     "client-dev": "webpack --config webpack.dev.config.js",
     "init-images": "node server/init/filestore.js",
     "init-database": "node server/init/database.js",
-    "test": "jest --collectCoverage"
+    "test": "jest --collectCoverage",
+    "build": "webpack --config webpack.pro.config.js",
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
