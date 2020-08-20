@@ -16,7 +16,7 @@ const formatProduct = (document) => ({
   _id: String(document._id) || '0',
   name: String(document.name) || '',
   description: String(document.description) || '',
-  image_url: formatProductImageUrl(document.image_url),
+  image_url: formatProductImageUrl(document),
   brand: String(document.brand) || '',
   price: String(document.price) || '$0.00',
   review_score: Number.parseFloat(document.review_score) || 5.00,

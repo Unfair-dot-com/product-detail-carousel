@@ -23,9 +23,9 @@ const generateRandomData = () => {
             .then((large) => {
               const images = small.map((file, index) => (
                 {
-                  small: small[index] || '',
-                  medium: medium[index] || '',
-                  large: large[index] || '',
+                  small: `${config.remotePath}${small[index]}` || '',
+                  medium: `${config.remotePath}${medium[index]}` || '',
+                  large: `${config.remotePath}${large[index]}` || '',
                 }
               ));
               const data = [];
