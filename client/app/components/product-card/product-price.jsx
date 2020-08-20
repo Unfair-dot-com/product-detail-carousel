@@ -1,23 +1,30 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const style = require('styled-components').default;
-const Container = require('../lib/container.jsx');
-const Heading = require('../lib/heading.jsx');
 
-const PriceContainer = style(Container)`
+const Container = style.div`
   margin-top: 8px;`;
 
-const HeadingPrice = style(Heading)`
+const PriceValue = style.span`
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
   color: #c4113f;
   font-size: 17.5px;
-  line-height: 1.5;
+  line-height: 37.5px;
   @media screen and (min-width: 800px) {
     font-size: 25px;
   };`;
 
-const Price = ({ product }) => (
-  <PriceContainer>
-    <HeadingPrice>{product.price}</HeadingPrice>
-  </PriceContainer>
+const Price = ({ price }) => (
+  <Container>
+    <PriceValue>{price}</PriceValue>
+  </Container>
 );
+
+Price.propTypes = {
+  price: PropTypes.string.isRequired,
+};
 
 module.exports = Price;

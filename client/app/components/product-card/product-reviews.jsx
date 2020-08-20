@@ -1,24 +1,16 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const style = require('styled-components').default;
 const { css } = require('styled-components');
-const Container = require('../lib/container.jsx');
-const Heading = require('../lib/heading.jsx');
 
-const width = (props) => css`
-  width: ${(props.product.review_score / 5) * 78}px;`;
+const width = ({ score }) => css`width: ${(score / 5) * 84}px;`;
 
-const fill = (props) => css`fill='${props.fill}'`;
+const fill = ({ color }) => css`fill='${color}'`;
 
-const ReviewsContainer = style(Container)`
+const Container = style.div`
   position: relative;
   height: 16px;
   margin: 8px 0;`;
-
-const ReviewCount = style(Heading)`
-  position: absolute;
-  left: 88px;
-  color: #615c65;
-  line-height: 1;`;
 
 const StarsTemplate = style.div`
   position: absolute;
@@ -47,17 +39,38 @@ const StarsTemplate = style.div`
   1.28-1 1.77 0L73 3.7l3.26.48c1.1.16 1.34.92.55 1.7l-2.36 2.3.56
   3.26c.2 1.1-.46 1.56-1.44 1.04l-2.92-1.54z'/%3E%3C/svg%3E");`;
 
-const StarsBackground = style(StarsTemplate)``;
+const Background = style(StarsTemplate)``;
 
-const Stars = style(StarsTemplate)`
+const Score = style(StarsTemplate)`
   ${width};`;
 
-const Reviews = ({ product }) => (
-  <ReviewsContainer>
-    <StarsBackground fill="%23d9d8db" />
-    <Stars product={product} fill="%23f6b71d" />
-    <ReviewCount>{product.review_count}</ReviewCount>
-  </ReviewsContainer>
+const Count = style.p`
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  font-size: 16px;
+  font-weight: 400;
+  color: #221924;
+  line-height: 1.2;
+
+  position: absolute;
+  left: 88px;
+  color: #615c65;
+  line-height: 1;`;
+
+const Reviews = ({ score, count }) => (
+  <Container>
+    <Background color="%23d9d8db" />
+    <Score score={score} color="%23f6b71d" />
+    <Count>{count}</Count>
+  </Container>
 );
+
+Reviews.propTypes = {
+  score: PropTypes.number.isRequired,
+  count: PropTypes.number.isRequired,
+};
 
 module.exports = Reviews;

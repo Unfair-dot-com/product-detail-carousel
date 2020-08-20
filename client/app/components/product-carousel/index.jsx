@@ -1,51 +1,16 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const style = require('styled-components').default;
-const { css } = require('styled-components');
-const Container = require('../lib/container.jsx');
-const Button = require('./button.jsx');
-const Card = require('../product-card/index.jsx');
+const Button = require('../lib/arrow-button.jsx');
+const ProductList = require('./product-list.jsx');
 
-const left = ({ position }) => css`left: ${position || 0}px;`;
-
-const resize = ({ quickview }) => {
-  let styling = '';
-  if (quickview) {
-    styling += css`min-width: 100%; width: 100%;`;
-  }
-  return styling;
-};
-
-const OuterContainer = style(Container)`
+const OuterContainer = style.div`
   position: relative;
   overflow: hidden;`;
 
-const InnerContainer = style(Container)`
+const InnerContainer = style.div`
   padding: 12px 4px;
   overflow: hidden;`;
-
-const ProductList = style.ul`
-  position: relative;
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  transition: transform 250ms cubic-bezier(.53,.34,.51,.9);
-  transition-property: all;
-  ${left}`;
-
-const ProductListItem = style.li`
-  position: relative;
-  display: list-item;
-  flex: 0 0 40%;
-  max-width: 220px;
-  min-width: 172px;
-  margin: 0 8px 0 0;
-  padding: 0;
-  background: #fff;
-  border-radius: 8px;
-  ${resize}`;
 
 class Carousel extends React.Component {
   constructor(props) {
@@ -61,6 +26,7 @@ class Carousel extends React.Component {
       quickview: false,
     };
     this.productList = React.createRef();
+    this.productCarousel = React.createRef();
     this.updatePosition = this.updatePosition.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
@@ -74,14 +40,15 @@ class Carousel extends React.Component {
   }
 
   updateDimensions(prevProps, prevState) {
-    const list = this.productList.current;
-    const { cardWidth } = prevState;
+    const list = this.productList.current.firstChild;
     if (list === null || list.childNodes.length === 0) {
       return;
     }
     const containerWidth = list.offsetWidth;
+    // We do not want 8 hard codded here
     const newCardWidth = list.firstChild.offsetWidth + 8;
     const totalWidth = list.childNodes.length * newCardWidth;
+    const { cardWidth } = prevState;
     if (cardWidth !== newCardWidth) {
       this.setState(() => {
         const newState = {
@@ -95,7 +62,13 @@ class Carousel extends React.Component {
     }
   }
 
-  updatePosition({ tracking, cardWidth, totalWidth, containerWidth }) {
+  updatePosition(state) {
+    const {
+      tracking,
+      cardWidth,
+      totalWidth,
+      containerWidth,
+    } = state;
     const ctx = this.state;
     const position = -(tracking * cardWidth);
     let hideLeft = true;
@@ -137,12 +110,11 @@ class Carousel extends React.Component {
   }
 
   closeQuickView() {
-    this.setState((prevState, props) => {
+    this.setState((prevState) => {
       const newState = this.updatePosition(prevState);
       return {
         ...newState,
         quickview: false,
-        position: 0,
       };
     });
   }
@@ -157,25 +129,49 @@ class Carousel extends React.Component {
     } = this.state;
     return (
       <OuterContainer>
-        <Button side="left" title="Previous Slide" click={this.previousSlide} hide={hideLeft} />
-        <InnerContainer>
-          <ProductList position={position} ref={this.productList}>
-            {products.map((product) => (
-              <ProductListItem key={product._id} quickview={quickview}>
-                <Card
-                  product={product}
-                  quickview={quickview}
-                  open={this.openQuickView}
-                  close={this.closeQuickView}
-                />
-              </ProductListItem>
-            ))}
-          </ProductList>
+        <Button
+          side="left"
+          title="Previous Slide"
+          click={this.previousSlide}
+          hide={hideLeft}
+        />
+        <InnerContainer ref={this.productList}>
+          <ProductList
+            products={products}
+            position={position}
+            quickview={quickview}
+            open={this.openQuickView}
+            close={this.closeQuickView}
+          />
         </InnerContainer>
-        <Button side="right" title="Next Slide" click={this.nextSlide} hide={hideRight} />
+        <Button
+          side="right"
+          title="Next Slide"
+          click={this.nextSlide}
+          hide={hideRight}
+        />
       </OuterContainer>
     );
   }
 }
+
+Carousel.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    image_url: PropTypes.shape({
+      small: PropTypes.string.isRequired,
+      medium: PropTypes.string.isRequired,
+      large: PropTypes.string.isRequired,
+    }),
+    brand: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+    review_score: PropTypes.number.isRequired,
+    review_count: PropTypes.number.isRequired,
+  })).isRequired,
+};
 
 module.exports = Carousel;

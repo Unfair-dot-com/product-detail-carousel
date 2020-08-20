@@ -1,8 +1,8 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const style = require('styled-components').default;
-const Container = require('../lib/container.jsx');
 
-const OuterContainer = style(Container)`
+const OuterContainer = style.div`
   position: relative;
   display: flex;
   flex-shrink: 0;
@@ -10,7 +10,7 @@ const OuterContainer = style(Container)`
   margin: -8px -8px 0;
   padding: 8px;`;
 
-const InnerContainer = style(Container)`
+const InnerContainer = style.div`
   position: relative;
   padding-bottom: 100%;`;
 
@@ -29,16 +29,12 @@ const Img = style.img`
   border: 0;
   box-sizing: border-box;`;
 
-const srcset = (product) => {
-  const img = new URL(product.image_url);
-  const medium = img.pathname;
-  const small = medium.replace('medium', 'small');
-  const large = medium.replace('medium', 'large');
-  const images = `${img.origin}${small} 170w, ${img.origin}${medium} 250w, ${img.origin}${large} 340w`;
-  return images;
+const srcset = (imageURL) => {
+  const { small, medium, large } = imageURL;
+  return `${small} 170w, ${medium} 250w, ${large} 340w`;
 };
 
-const sizes = (product) => `(min-width: 750px) 170px, (min-width: 470px) calc(22vw - 20px), calc(40vw - 22px)`;
+const sizes = (imageURL) => `(min-width: 750px) 170px, (min-width: 470px) calc(22vw - 20px), calc(40vw - 22px)`;
 
 /**
  * sizes="(min-width: 750px) 170px,(min-width: 470px) calc(22vw - 20px),calc(40vw - 22px)"
@@ -52,17 +48,26 @@ const sizes = (product) => `(min-width: 750px) 170px, (min-width: 470px) calc(22
  *
  */
 
-const Image = ({ product }) => (
+const Image = ({ imageURL, name }) => (
   <OuterContainer>
     <InnerContainer>
       <Img
-        src={product.image_url}
-        alt={product.name}
-        sizes={sizes(product)}
-        srcSet={srcset(product)}
+        src={imageURL.small}
+        alt={name}
+        sizes={sizes(imageURL)}
+        srcSet={srcset(imageURL)}
       />
     </InnerContainer>
   </OuterContainer>
 );
+
+Image.propTypes = {
+  imageURL: PropTypes.shape({
+    small: PropTypes.string.isRequired,
+    medium: PropTypes.string.isRequired,
+    large: PropTypes.string.isRequired,
+  }).isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 module.exports = Image;

@@ -33,6 +33,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "jest": "^26.3.0",
     "nodemon": "^2.0.4",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.1",

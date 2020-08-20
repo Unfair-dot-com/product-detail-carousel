@@ -15,35 +15,47 @@ const generateRandomProduct = (id, images) => ({
 });
 
 const generateRandomData = () => {
-  fs.listRemoteDir(config.remoteDir)
-    .then((results) => {
-      const images = results.map((file) => `${config.remotePath}${file}`);
-      const data = [];
-      for (let i = config.startId; i <= config.endId; i += 1) {
-        data.push(generateRandomProduct(i, images));
-      }
-      db.drop()
-        .catch((error) => {
-          if (error.codeName === 'NamespaceNotFound') {
-            console.log('Products collection doesn\'t exist.');
-            console.log('error.ok:', error.ok);
-            console.log('error.code:', error.code);
-            console.log('error.codeName:', error.codeName);
-          } else {
-            throw error;
-          }
-        })
-        .then(() => {
-          db.insert(data).then((results) => {
-            // console.log('Random data records:', results.ops);
-            console.log('Random data count in:', results.insertedCount);
-            console.log('Random data ids:', results.insertedIds);
-            db.connection.then((connect) => {
-              connect.client.close();
-            });
-          });
-        });
-    })
+  fs.listRemoteDir(config.remoteSmallDir)
+    .then((small) => (
+      fs.listRemoteDir(config.remoteMediumDir)
+        .then((medium) => (
+          fs.listRemoteDir(config.remoteLargeDir)
+            .then((large) => {
+              const images = small.map((file, index) => (
+                {
+                  small: `${config.remotePath}${small[index]}` || '',
+                  medium: `${config.remotePath}${medium[index]}` || '',
+                  large: `${config.remotePath}${large[index]}` || '',
+                }
+              ));
+              const data = [];
+              for (let i = config.startId; i <= config.endId; i += 1) {
+                data.push(generateRandomProduct(i, images));
+              }
+              db.drop()
+                .catch((error) => {
+                  if (error.codeName === 'NamespaceNotFound') {
+                    console.log('Products collection doesn\'t exist.');
+                    console.log('error.ok:', error.ok);
+                    console.log('error.code:', error.code);
+                    console.log('error.codeName:', error.codeName);
+                  } else {
+                    throw error;
+                  }
+                })
+                .then(() => {
+                  db.insert(data).then((results) => {
+                    // console.log('Random data records:', results.ops);
+                    console.log('Random data count in:', results.insertedCount);
+                    console.log('Random data ids:', results.insertedIds);
+                    db.connection.then((connect) => {
+                      connect.client.close();
+                    });
+                  });
+                });
+            })
+        ))
+    ))
     .catch((error) => {
       console.log('Storing random data failed:', error);
       db.connection.then((connect) => {

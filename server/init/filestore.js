@@ -1,8 +1,8 @@
 const fs = require('../filestore');
 const config = require('../config/init');
 
-const uploadImages = () => {
-  fs.removeFiles(config.remoteDir)
+const uploadImages = (localDir, remoteDir) => (
+  fs.removeFiles(remoteDir)
     .catch((error) => {
       if (error.code === 'MalformedXML') {
         console.log('Remote directory is already empty.');
@@ -19,14 +19,20 @@ const uploadImages = () => {
         throw error;
       }
     })
-    .then(() => fs.uploadFiles(config.localDir, config.remoteDir))
-    .then(() => fs.listRemoteDir(config.remoteDir))
+    .then(() => fs.uploadFiles(localDir, remoteDir))
+    .then(() => fs.listRemoteDir(remoteDir))
     .then((results) => {
       console.log('Images uploaded:', results);
     })
+);
+
+const uploadAllImages = () => (
+  uploadImages(config.localSmallDir, config.remoteSmallDir)
+    .then(() => uploadImages(config.localMediumDir, config.remoteMediumDir))
+    .then(() => uploadImages(config.localLargeDir, config.remoteLargeDir))
     .catch((error) => {
       console.log('Uploading images failed:', error);
-    });
-};
+    })
+);
 
-uploadImages();
+uploadAllImages();
