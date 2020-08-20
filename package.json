@@ -9,7 +9,8 @@
     "init-images": "node server/init/filestore.js",
     "init-database": "node server/init/database.js",
     "test": "jest --collectCoverage",
-    "build": "webpack --config webpack.pro.config.js"
+    "build": "webpack --config webpack.pro.config.js",
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
