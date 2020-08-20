@@ -66,12 +66,8 @@ Image.propTypes = {
     small: PropTypes.string.isRequired,
     medium: PropTypes.string.isRequired,
     large: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
   name: PropTypes.string.isRequired,
-};
-
-Image.defaultProps = {
-  imageURL: PropTypes.object,
 };
 
 module.exports = Image;

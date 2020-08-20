@@ -97,14 +97,10 @@ Card.propTypes = {
     price: PropTypes.string.isRequired,
     review_score: PropTypes.number.isRequired,
     review_count: PropTypes.number.isRequired,
-  }),
+  }).isRequired,
   quickview: PropTypes.bool.isRequired,
   open: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
-};
-
-Card.defaultProps = {
-  product: PropTypes.object,
 };
 
 module.exports = Card;

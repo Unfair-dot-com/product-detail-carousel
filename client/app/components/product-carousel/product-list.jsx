@@ -80,15 +80,11 @@ ProductList.propTypes = {
     price: PropTypes.string.isRequired,
     review_score: PropTypes.number.isRequired,
     review_count: PropTypes.number.isRequired,
-  })),
+  })).isRequired,
   position: PropTypes.number.isRequired,
   quickview: PropTypes.bool.isRequired,
   open: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
-};
-
-ProductList.defaultProps = {
-  products: PropTypes.array,
 };
 
 module.exports = ProductList;

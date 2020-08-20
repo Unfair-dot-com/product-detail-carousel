@@ -171,11 +171,7 @@ Carousel.propTypes = {
     price: PropTypes.string.isRequired,
     review_score: PropTypes.number.isRequired,
     review_count: PropTypes.number.isRequired,
-  })),
-};
-
-Carousel.defaultProps = {
-  products: PropTypes.array,
+  })).isRequired,
 };
 
 module.exports = Carousel;
