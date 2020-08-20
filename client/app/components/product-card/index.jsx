@@ -54,7 +54,7 @@ const Card = (props) => {
       <InnerContainer>
         <CardBox>
           <ProductLink href={product.url}>
-            <Image product={product} />
+            <Image imageURL={product.image_url} name={product.name} />
             <Name name={product.name} />
             <Brand brand={product.brand} />
             <Price price={product.price} />
