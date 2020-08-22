@@ -50,9 +50,10 @@ const ProductList = (props) => {
   } = props;
   return (
     <List position={position}>
-      {products.map((product) => (
+      {products.map((product, index) => (
         <Product key={product.id} quickview={quickview}>
           <Card
+            index={index}
             product={product}
             quickview={quickview}
             open={open}

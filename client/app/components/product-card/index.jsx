@@ -44,6 +44,7 @@ const ProductLink = style(Link)`
 
 const Card = (props) => {
   const {
+    index,
     product,
     quickview,
     open,
@@ -68,13 +69,13 @@ const Card = (props) => {
           url={product.url}
           description={product.description}
           hide={!quickview}
-          close={close}
+          close={() => close(index)}
           fullDetailsLinkTitle="See Full Details"
         />
       </InnerContainer>
       <QuickViewButton
         title="Quickview"
-        click={() => open(product.id)}
+        click={() => open(index)}
         removed={quickview}
       />
     </OuterContainer>
@@ -82,6 +83,7 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
+  index: PropTypes.number.isRequired,
   product: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
