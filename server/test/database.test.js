@@ -1,4 +1,4 @@
-// jest.setMock('../config/db', {
+// jest.setMock('../config/database', {
 //   url: process.env.MONGO_URL,
 //   name: 'pdc-test',
 // });

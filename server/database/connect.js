@@ -1,5 +1,5 @@
 const Client = require('mongodb').MongoClient;
-const config = require('../config/db');
+const config = require('../config/database');
 
 const dbConnection = (url, dbName) => new Promise((resolve, reject) => {
   const connection = new Client(url, { useUnifiedTopology: true });
