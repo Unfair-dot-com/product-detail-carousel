@@ -16,18 +16,14 @@ class Carousel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tracking: 0,
+      index: 0,
       position: 0,
-      cardWidth: 0,
-      totalWidth: 0,
-      containerWidth: 0,
       hideLeft: true,
       hideRight: true,
       quickview: false,
     };
     this.productList = React.createRef();
     this.productCarousel = React.createRef();
-    this.updatePosition = this.updatePosition.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
     this.openQuickView = this.openQuickView.bind(this);
@@ -39,84 +35,72 @@ class Carousel extends React.Component {
     this.updateDimensions(prevProps, prevState);
   }
 
-  updateDimensions(prevProps, prevState) {
+  calculatePosition(currentIndex) {
+    let index = currentIndex;
     const list = this.productList.current.firstChild;
     if (list === null || list.childNodes.length === 0) {
-      return;
+      return null;
     }
     const containerWidth = list.offsetWidth;
     // We do not want 8 hard codded here
-    const newCardWidth = list.firstChild.offsetWidth + 8;
-    const totalWidth = list.childNodes.length * newCardWidth;
-    const { cardWidth } = prevState;
-    if (cardWidth !== newCardWidth) {
-      this.setState(() => {
-        const newState = {
-          cardWidth: newCardWidth,
-          totalWidth,
-          containerWidth,
-        };
-        const temp = this.updatePosition({ ...prevState, ...newState });
-        return { ...newState, ...temp };
-      });
+    const cardWidth = list.childNodes[index].offsetWidth + 8;
+    const totalWidth = list.childNodes.length * cardWidth;
+    const limit = totalWidth - containerWidth;
+    let position = -(index * cardWidth);
+    const offset = limit + position;
+    if (offset < 0) {
+      position = -limit;
+      index = Math.ceil(limit / cardWidth);
     }
-  }
-
-  updatePosition(state) {
-    const {
-      tracking,
-      cardWidth,
-      totalWidth,
-      containerWidth,
-    } = state;
-    const ctx = this.state;
-    const position = -(tracking * cardWidth);
     let hideLeft = true;
     let hideRight = true;
     if (position < 0) {
       hideLeft = false;
     }
-    if (((totalWidth - containerWidth) + position) > 0) {
+    if (offset > 0) {
       hideRight = false;
     }
     return {
-      tracking,
+      index,
       position,
       hideLeft,
       hideRight,
     };
   }
 
+  updateDimensions(prevProps, prevState) {
+    const { state } = this;
+    const newState = this.calculatePosition(state.index);
+    const position = state.position !== newState.position;
+    const hideLeft = state.hideLeft !== newState.hideLeft;
+    const hideRight = state.hideRight !== newState.hideRight;
+    const quickview = state.quickview !== prevState.quickview;
+    const index = state.index !== prevState.index;
+    if (position || hideLeft || hideRight || quickview || index) {
+      this.setState(newState);
+    }
+  }
+
   nextSlide() {
     this.setState((prevState) => {
-      const tracking = prevState.tracking + 1;
-      return this.updatePosition({ ...prevState, tracking });
+      const index = prevState.index + 1;
+      return this.calculatePosition(index);
     });
   }
 
   previousSlide() {
     this.setState((prevState) => {
-      const tracking = prevState.tracking - 1;
-      return this.updatePosition({ ...prevState, tracking });
+      const index = prevState.index - 1;
+      return this.calculatePosition(index);
     });
   }
 
-  openQuickView(id) {
-    this.setState((prevState) => {
-      const tracking = Number.parseInt(id, 10);
-      const newState = this.updatePosition({ ...prevState, tracking });
-      return { ...newState, quickview: true };
-    });
+  openQuickView(index) {
+    this.setState({ index, quickview: true });
   }
 
-  closeQuickView() {
-    this.setState((prevState) => {
-      const newState = this.updatePosition(prevState);
-      return {
-        ...newState,
-        quickview: false,
-      };
-    });
+  closeQuickView(index) {
+    this.setState({ index, quickview: false });
   }
 
   render() {
