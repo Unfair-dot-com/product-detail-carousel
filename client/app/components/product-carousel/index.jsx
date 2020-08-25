@@ -10,7 +10,8 @@ const OuterContainer = style.div`
 
 const InnerContainer = style.div`
   padding: 12px 4px;
-  overflow: hidden;`;
+  overflow: hidden;
+  box-sizing: border-box;`;
 
 class Carousel extends React.Component {
   constructor(props) {
@@ -23,7 +24,6 @@ class Carousel extends React.Component {
       quickview: false,
     };
     this.productList = React.createRef();
-    this.productCarousel = React.createRef();
     this.nextSlide = this.nextSlide.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
     this.openQuickView = this.openQuickView.bind(this);
@@ -37,11 +37,12 @@ class Carousel extends React.Component {
 
   calculatePosition(currentIndex) {
     let index = currentIndex;
-    const list = this.productList.current.firstChild;
+    const container = this.productList.current;
+    const list = container.firstChild;
     if (list === null || list.childNodes.length === 0) {
       return null;
     }
-    const containerWidth = list.offsetWidth;
+    const containerWidth = container.offsetWidth;
     // We do not want 8 hard codded here
     const cardWidth = list.childNodes[index].offsetWidth + 8;
     const totalWidth = list.childNodes.length * cardWidth;
