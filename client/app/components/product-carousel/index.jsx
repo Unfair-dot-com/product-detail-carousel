@@ -38,7 +38,7 @@ class Carousel extends React.Component {
   calculatePosition(currentIndex) {
     let index = currentIndex;
     const container = this.productList.current;
-    const list = this.productList.current.firstChild;
+    const list = container.firstChild;
     if (list === null || list.childNodes.length === 0) {
       return null;
     }
@@ -49,7 +49,6 @@ class Carousel extends React.Component {
     const limit = totalWidth - containerWidth;
     let position = -(index * cardWidth);
     const offset = limit + position;
-    console.log(index, containerWidth, cardWidth, totalWidth, limit, position, offset);
     if (offset < 0) {
       position = -limit;
       index = Math.ceil(limit / cardWidth);
