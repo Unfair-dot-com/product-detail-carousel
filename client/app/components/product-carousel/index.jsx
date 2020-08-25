@@ -23,7 +23,7 @@ class Carousel extends React.Component {
       hideRight: true,
       quickview: false,
     };
-    this.productList = React.createRef();
+    this.innerContainer = React.createRef();
     this.nextSlide = this.nextSlide.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
     this.openQuickView = this.openQuickView.bind(this);
@@ -37,7 +37,7 @@ class Carousel extends React.Component {
 
   calculatePosition(currentIndex) {
     let index = currentIndex;
-    const container = this.productList.current;
+    const container = this.innerContainer.current;
     const list = container.firstChild;
     if (list === null || list.childNodes.length === 0) {
       return null;
@@ -120,7 +120,7 @@ class Carousel extends React.Component {
           click={this.previousSlide}
           hide={hideLeft}
         />
-        <InnerContainer ref={this.productList}>
+        <InnerContainer ref={this.innerContainer}>
           <ProductList
             products={products}
             position={position}
