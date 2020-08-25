@@ -10,7 +10,8 @@ const OuterContainer = style.div`
 
 const InnerContainer = style.div`
   padding: 12px 4px;
-  overflow: hidden;`;
+  overflow: hidden;
+  box-sizing: border-box;`;
 
 class Carousel extends React.Component {
   constructor(props) {
@@ -23,7 +24,6 @@ class Carousel extends React.Component {
       quickview: false,
     };
     this.productList = React.createRef();
-    this.outerContainer = React.createRef();
     this.nextSlide = this.nextSlide.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
     this.openQuickView = this.openQuickView.bind(this);
@@ -37,7 +37,7 @@ class Carousel extends React.Component {
 
   calculatePosition(currentIndex) {
     let index = currentIndex;
-    const container = this.outerContainer.current;
+    const container = this.productList.current;
     const list = this.productList.current.firstChild;
     if (list === null || list.childNodes.length === 0) {
       return null;
@@ -49,6 +49,7 @@ class Carousel extends React.Component {
     const limit = totalWidth - containerWidth;
     let position = -(index * cardWidth);
     const offset = limit + position;
+    console.log(index, containerWidth, cardWidth, totalWidth, limit, position, offset);
     if (offset < 0) {
       position = -limit;
       index = Math.ceil(limit / cardWidth);
@@ -113,7 +114,7 @@ class Carousel extends React.Component {
       quickview,
     } = this.state;
     return (
-      <OuterContainer ref={this.outerContainer}>
+      <OuterContainer>
         <Button
           side="left"
           title="Previous Slide"
